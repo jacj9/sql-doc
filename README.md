@@ -1,1 +1,1 @@
-A space where I document some of technical exercises.
+This space is where I document my technical skills progress.
