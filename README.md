@@ -1,1 +1,1 @@
-This is where I document my SQL progress.
+Documenting my SQL journey.
