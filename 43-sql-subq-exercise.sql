@@ -1,3 +1,4 @@
+-- SQL Exercises: Employees who was hired after the employee with ID 165
 -- 43. From the following table, write a SQL query to find those employees who joined after the employee whose ID is 165. Return first name, last name and hire date.
 
 SELECT first_name, last_name, hire_date
