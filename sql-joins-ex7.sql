@@ -1,6 +1,7 @@
 -- SQL Exercise: Employees who earn less than employee 182
 --  7. From the following table, write a SQL query to find the employees who earn less than the employee of ID 182. Return first name, last name and salary.
 
+-- My initial solution:
 SELECT e1.first_name, e1.last_name, e1.salary
 FROM employees e1
 JOIN employees e2 ON e1.employee_id = e2.employee_id
