@@ -1,1 +1,1 @@
-Documenting MySQL journey.
+Documenting my SQL journey.
