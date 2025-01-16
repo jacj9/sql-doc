@@ -2,7 +2,7 @@
 
 SELECT city
 FROM locations
-WHERE location_id IN
+WHERE location_id =
 (SELECT location_id
 FROM departments
 WHERE department_id =
