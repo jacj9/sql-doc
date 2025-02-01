@@ -24,7 +24,7 @@ FROM orders D
 WHERE C.ord_no = D.ord_no);
 
 -- Final attempt:
-SELECT S.salesman_id, S.name, A.ord_no, 'highest on ', A.ord_date
+SELECT S.salesman_id, S.name, A.ord_no, 'highest on', A.ord_date
 FROM salesman S, orders A
 WHERE S.salesman_id = A.salesman_id
 AND A.purch_amt =
