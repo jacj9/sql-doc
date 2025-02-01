@@ -5,3 +5,9 @@ SELECT department_name, first_name || ' ' || last_name AS name_of_manager, city
 FROM employees E
 JOIN departments D ON E.employee_id = D.manager_id
 JOIN locations L ON D.location_id = L.location_id;
+
+-- Second attempt:
+SELECT D.department_name, E.first_name || ' ' || E.last_name AS name_of_manager, L.city
+FROM employees E
+JOIN departments D ON E.employee_id = D.manager_id
+JOIN locations L USING (location_id);
