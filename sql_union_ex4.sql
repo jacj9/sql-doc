@@ -22,3 +22,20 @@ WHERE C.purch_amt =
 (SELECT MIN(D.purch_amt)
 FROM orders D
 WHERE C.ord_no = D.ord_no);
+
+-- Final attempt:
+SELECT S.salesman_id, S.name, A.ord_no, 'highest on ', A.ord_date
+FROM salesman S, orders A
+WHERE S.salesman_id = A.salesman_id
+AND A.purch_amt =
+(SELECT MAX(B.purch_amt)
+FROM orders B
+WHERE A.ord_date = B.ord_date)
+UNION
+SELECT S.salesman_id, S.name, A.ord_no, 'lowerst on', A.ord_date
+FROM salesman S, orders A
+WHERE S.salesman_id = A.salesman_id
+AND A.purch_amt =
+(SELECT MIN(B.purch_amt)
+FROM orders B
+WHERE A.ord_date = B.ord_date);
