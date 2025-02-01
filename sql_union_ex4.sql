@@ -32,7 +32,7 @@ AND A.purch_amt =
 FROM orders B
 WHERE A.ord_date = B.ord_date)
 UNION
-SELECT S.salesman_id, S.name, A.ord_no, 'lowerst on', A.ord_date
+SELECT S.salesman_id, S.name, A.ord_no, 'lowest on', A.ord_date
 FROM salesman S, orders A
 WHERE S.salesman_id = A.salesman_id
 AND A.purch_amt =
