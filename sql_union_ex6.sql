@@ -10,3 +10,19 @@ SELECT s.salesman_id, s.name, c.cust_name, s.commission
 FROM salesman s, customer c
 
 ORDER BY 2;
+
+-- Second attempt:
+SELECT a.salesman_id, a.name, b.cust_name, a.commission
+FROM salesman a, customer b
+WHERE a.city = b.city
+
+UNION
+
+SELECT a.salesman_id, a.name, 'NO MATCH', a.commission
+FROM salesman a, customer b
+WHERE NOT a.city = ANY
+(SELECT c.city
+FROM customer c
+WHERE b.city = c.city)
+
+ORDER BY 2 DESC;
