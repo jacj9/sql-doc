@@ -20,3 +20,23 @@ GROUP BY salesman_id
 HAVING COUNT(*) > 1)
 
 ORDER BY 2 ASC;
+
+
+-- Second attempt
+SELECT customer_id AS ID, cust_name AS name
+FROM customer a
+WHERE 1 <
+(SELECT COUNT(*)
+FROM orders b
+WHERE a.customer_id = b.customer_id)
+
+UNION
+
+SELECT salesman_id AS ID, name
+FROM salesman a
+WHERE 1 <
+(SELECT COUNT(*)
+FROM orders b
+WHERE a.salesman_id = b.salesman_id)
+
+ORDER BY 2;
