@@ -7,3 +7,9 @@ title VARCHAR(50) NOT NULL,
 artist VARCHAR(50) NOT NULL,
 date_release DATETIME NOT NULL
 );
+
+-- 2. Add a New Column: Write a SQL query to add a new column to an existing table.
+
+ALTER TABLE employees
+ADD COLUMN birthdate DATETIME NOT NULL
+ADD COLUMN hire_date DATETIME NOT NULL;
