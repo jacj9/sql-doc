@@ -28,8 +28,16 @@ JOIN logins l2 ON l.id = l2.id
 WHERE l.id != l2.id
   AND 
 
+-- Second attempt
+SELECT u.id, u.username, u.email, l1.country_code as country1, l2.country_code as country2
+FROM users u
+JOIN logins l1 ON u.id = l1.user_id
+JOIN logins l2 ON u.id = l2.user_id
+WHERE l1.login_time BETWEEN DATE_SUB(l2.login_time, INTERVAL 1 HOUR) AND l2.login_time -- To subtract 1 hour from the l2.login_time
+AND l1.country_code != l2.country_code;
+  
 
-"""
+""" Official Solution
 SELECT u.id, u.username, u.email, l1.country_code as country_code1, l2.country_code as country_code2
 FROM Users u
 JOIN Logins l1 ON u.id = l1.user_id
