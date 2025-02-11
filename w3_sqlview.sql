@@ -6,3 +6,11 @@ CREATE VIEW newyorksalespeople AS
 SELECT *
 FROM salesman
 WHERE city = 'New York';
+
+-- 2. From the following table, create a view for all salespersons. Return salesperson ID, name, and city.  
+-- Creating a VIEW named 'salesperson'
+CREATE VIEW salesperson
+-- Selecting specific columns (salesman_id, name, city) from the 'salesman' table
+AS SELECT salesman_id, name, city
+-- Retrieving data from the 'salesman' table and storing it in the VIEW
+FROM salesman;
