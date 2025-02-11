@@ -11,5 +11,13 @@ date_release DATETIME NOT NULL
 -- 2. Add a New Column: Write a SQL query to add a new column to an existing table.
 
 ALTER TABLE employees
-ADD COLUMN birthdate DATETIME NOT NULL
-ADD COLUMN hire_date DATETIME NOT NULL;
+ADD COLUMN birthdate DATETIME NOT NULL,
+ADD COLUMN hire_date DATETIME NOT NULL,
+ADD COLUMN department VARCHAR(50);
+
+ALTER TABLE customers
+ADD COLUMN created_at DATETIME,
+ADD COLUMN phone_number INT,
+ADD COLUMN is_active BOOLEAN,
+ADD COLUMN discount_rate DECIMAL;
+
