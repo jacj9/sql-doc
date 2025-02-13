@@ -14,3 +14,10 @@ CREATE VIEW salesperson
 AS SELECT salesman_id, name, city
 -- Retrieving data from the 'salesman' table and storing it in the VIEW
 FROM salesman;
+
+
+-- 3. From the following table, create a view to locate the salespeople in the city 'New York'.
+CREATE VIEW salesman_nyc
+AS SELECT *
+FROM salesman
+WHERE city = 'New York';
