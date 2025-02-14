@@ -32,3 +32,11 @@ ALTER TABLE employees
 MODIFY COLUMN salary DECIMAL(10,2), 
 MODIFY COLUMN department TEXT,
 MODIFY COLUMN birthday DATE; 
+
+
+-- 4. Drop a column: Write a SQL query to remove a column from an existing table.
+ALTER TABLE customers
+DROP COLUMN is_active;
+
+ALTER TABLE employees
+DROP COLUMN department;
