@@ -21,3 +21,10 @@ CREATE VIEW salesman_nyc
 AS SELECT *
 FROM salesman
 WHERE city = 'New York';
+
+-- 4. From the following table, create a view that counts the number of customers in each grade. 
+
+CREATE VIEW numofcust (grade, number)
+AS SELECT grade, COUNT(customer_id)
+FROM customer
+GROUP BY grade;
