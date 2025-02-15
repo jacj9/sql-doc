@@ -51,3 +51,8 @@ CREATE TABLE Employees (
     FirstName VARCHAR(100),
     LastName VARCHAR(100)
 );
+
+-- Add a unique constraint to the "Name" column to ensure no duplicate name
+ALTER TABLE emplouyees -- Specify the table to modify.
+ADD CONSTRAINT UC_Name UNIQUE (Name); -- Ensure all names are unique.
+
