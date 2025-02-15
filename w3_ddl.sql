@@ -76,5 +76,54 @@ CREATE TABLE customers (
 ALTER TABLE Orders
 ADD customerID INT, -- Add a column to reference the "customers" table
 ADD CONSTRAINT FK_CustomerOrder
-FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID); 
+FOREIGN KEY CustomerID REFERENCES Customers(CustomerID); 
 -- This will link orders.customerid to customers.customerid using a foreing key
+
+-- More practice
+-- Write a SQL query to create a foreign key relationship between the customer_id column 
+-- in the orders table and the id column in the customers table.
+
+CREATE TABLE orders (
+customer_id INT PRIMARY KEY,
+name VARCHAR(50)
+);
+
+ALTER TABLE customers
+ADD CONSTRAINT FK_customersorders
+FOREIGN KEY id REFERENCES orders(customer_id);
+
+-- Write a SQL query to establish a foreign key constraint between the department_id column in 
+-- the employees table and the id column in the departments table.
+
+CREATE TABLE employees (
+  id INT PRIMARY KEY NOT NULL,
+  depamrtment_id INT
+);
+
+ALTER TABLE departments
+ADD CONSTRAINT FK_employeesdepartments
+FOREIGN KEY id REFERENCES employees(department_id);
+
+-- Write a SQL query to link the supplier_id column in the products table to the id column in 
+-- the suppliers table using a foreign key.
+
+CREATE TABLE products (
+  id INT PRIMARY KEY NOT NULL,
+  supplier_id INT
+);
+
+ALTER TABLE suppliers
+ADD CONSTRAINT FK_productssuppliers
+FOREIGN KEY supplier_id REFERENCES suppliers(id);
+
+-- Write a SQL query to create a foreign key relationship between the category_id column in 
+-- the items table and the id column in the categories table.
+
+CREATE TABLE items (
+  id INT PRIMARY KEY NOT NULL,
+  category_id INT
+);
+
+ALTER TABLE categories
+ADD CONSTRAINT FK_itemscatagories
+FOREIGN KEY id REFERENCES items(category_id);
