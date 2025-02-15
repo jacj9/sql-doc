@@ -28,3 +28,7 @@ CREATE VIEW numofcust (grade, number)
 AS SELECT grade, COUNT(customer_id)
 FROM customer
 GROUP BY grade;
+
+
+-- 5. From the following table, create a view to count the number of unique customers, compute the average and the total purchase amount of customer orders by each date.
+
