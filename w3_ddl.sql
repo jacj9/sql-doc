@@ -40,3 +40,14 @@ DROP COLUMN is_active;
 
 ALTER TABLE employees
 DROP COLUMN department;
+
+
+-- 5. Add a Unique Constraint: Write a SQL query to add a unique constraint to a column in an existing table.
+-- The UNIQUE constraint ensures that all values in a column are different.
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    -- Unique constraint in Email column 
+    Email VARCHAR(255) UNIQUE,
+    FirstName VARCHAR(100),
+    LastName VARCHAR(100)
+);
