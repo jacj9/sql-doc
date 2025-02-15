@@ -67,7 +67,14 @@ ADD CONSTRAINT UC_order UNIQUE (order_reference);
 
 
 -- 6. Add a Foreign Key: Write a SQL query to create a foreign key relationship between two tables.
+-- Create a table
+CREATE TABLE customers (
+  CustomerId INT PRIMARY KEY, -- Primary key for the customers table
+  name VARCHAR(50)    -- Column to customer names.
+);
+
 ALTER TABLE Orders
-  -- Add foreign key (customerid) to orders table connecting to customers table (customerid)
+ADD customerID INT, -- Add a column to reference the "customers" table
 ADD CONSTRAINT FK_CustomerOrder
 FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID); 
+-- This will link orders.customerid to customers.customerid using a foreing key
