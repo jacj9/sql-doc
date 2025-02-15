@@ -35,3 +35,15 @@ CREATE VIEW numcustomers
 AS SELECT ord_date, COUNT(DISTINCT customer_id), AVG(purch_amt), SUM(purch_amt)
 FROM orders
 GROUP BY ord_date;
+
+
+-- 6. From the following tables, create a view to get the salesperson and customer by name. Return order name, purchase amount, salesperson ID, name, customer name.
+
+-- First attempt:
+CREATE VIEW salesandcust (ord_no, purch_amt, salesman_id, name, cust_name)
+AS SELECT o.ord_no, o.purch_amt, s.salesman_id, s.name, c.cust_name
+FROM salesman s
+JOIN customer c ON (salesman_id)
+JOIN orders o ON (customer_id)
+
+-- More practice:
