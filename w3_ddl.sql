@@ -64,3 +64,10 @@ ADD CONSTRAINT UC_customers UNIQUE (email_address);
 -- Write a SQL query to enforce uniqueness on the order_reference column in the orders table.
 ALTER TABLE orders
 ADD CONSTRAINT UC_order UNIQUE (order_reference);
+
+
+-- 6. Add a Foreign Key: Write a SQL query to create a foreign key relationship between two tables.
+ALTER TABLE Orders
+  -- Add foreign key (customerid) to orders table connecting to customers table (customerid)
+ADD CONSTRAINT FK_CustomerOrder
+FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID); 
