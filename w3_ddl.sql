@@ -44,15 +44,23 @@ DROP COLUMN department;
 
 -- 5. Add a Unique Constraint: Write a SQL query to add a unique constraint to a column in an existing table.
 -- The UNIQUE constraint ensures that all values in a column are different.
-CREATE TABLE Employees (
-    EmployeeID INT PRIMARY KEY,
-    -- Unique constraint in Email column 
-    Email VARCHAR(255) UNIQUE,
-    FirstName VARCHAR(100),
-    LastName VARCHAR(100)
-);
 
 -- Add a unique constraint to the "Name" column to ensure no duplicate name
-ALTER TABLE emplouyees -- Specify the table to modify.
+ALTER TABLE employees -- Specify the table to modify.
 ADD CONSTRAINT UC_Name UNIQUE (Name); -- Ensure all names are unique.
 
+-- Write a SQL query to add a unique constraint to the username column in the users table.
+ALTER TABLE users
+ADD CONSTRAINT UC_users UNIQUE (username);
+
+-- Write a SQL query to ensure that the product_code column in the products table contains only unique values.
+ALTER TABLE products
+ADD CONSTRAINT UC_products UNIQUE (product_code);
+
+-- Write a SQL query to add a unique constraint to the email_address column in the customers table.
+ALTER TABLE customers
+ADD CONSTRAINT UC_customers UNIQUE (email_address);
+
+-- Write a SQL query to enforce uniqueness on the order_reference column in the orders table.
+ALTER TABLE orders
+ADD CONSTRAINT UC_order UNIQUE (order_reference);
