@@ -31,4 +31,7 @@ GROUP BY grade;
 
 
 -- 5. From the following table, create a view to count the number of unique customers, compute the average and the total purchase amount of customer orders by each date.
-
+CREATE VIEW numcustomers
+AS SELECT ord_date, COUNT(DISTINCT customer_id), AVG(purch_amt), SUM(purch_amt)
+FROM orders
+GROUP BY ord_date;
