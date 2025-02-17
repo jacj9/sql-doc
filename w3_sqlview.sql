@@ -47,3 +47,8 @@ JOIN customer c ON (salesman_id)
 JOIN orders o ON (customer_id)
 
 -- More practice:
+CREATE VIEW ordnum
+AS SELECT ord_no, purch_amt, o.salesman_id, name, cust_name
+FROM salesman s, customer c, orders o
+WHERE s.salesman_id = o.salesman_id
+AND c.customer_id = o.customer_id;
