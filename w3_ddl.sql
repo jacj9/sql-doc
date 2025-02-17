@@ -127,3 +127,20 @@ CREATE TABLE items (
 ALTER TABLE categories
 ADD CONSTRAINT FK_itemscatagories
 FOREIGN KEY id REFERENCES items(category_id);
+
+
+-- 7. Drop a Table: Write a SQL query to permanently delete a table and all its data.
+DROP TABLE categories;
+
+-- 8. Truncate a Table: Write a SQL query to remove all rows from a table while retaining its structure.
+-- Create a table to truncate
+CREATE TABLE employees (
+  emp_id INT(4),
+  name VARCHAR(20),
+  age INT(3),
+  dob DATE,
+  salary DECIMAL(7,2)
+);
+
+-- truncate employees table
+TRUNCATE TABLE employees;
