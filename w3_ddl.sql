@@ -144,3 +144,23 @@ CREATE TABLE employees (
 
 -- truncate employees table
 TRUNCATE TABLE employees;
+
+
+-- 9. Create an Index: Write a SQL query to create an index on a column to improve query performance.
+
+CREATE INDEX idx_salary ON employees (salary);
+
+-- Create an index on the "Name" column to improve query performance.
+CREATE INDEX idx_Name ON Employees(Name); -- Create an index for faster lookups.
+
+-- Write a SQL query to create an index on the last_name column in the employees table.
+CREATE INDEX idx_lname ON employees(last_name);
+
+-- Write a SQL query to improve query performance by creating an index on the product_name column in the products table.
+CREATE INDEX idx_pname ON products(product_name);
+
+-- Write a SQL query to create a composite index on the city and state columns in the addresses table.
+CREATE INDEX idx_city ON addresses(city);
+
+-- Write a SQL query to create an index on the email column in the users table.
+CREATE INDEX idx_email ON users(email);
