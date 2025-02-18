@@ -52,3 +52,17 @@ AS SELECT ord_no, purch_amt, o.salesman_id, name, cust_name
 FROM salesman s, customer c, orders o
 WHERE s.salesman_id = o.salesman_id
 AND c.customer_id = o.customer_id;
+
+
+-- 7. From the following table, create a view to find the salesperson who handles a customer who makes the highest order of the day. Return order date, salesperson ID, name.
+
+CREATE VIEW highestorder
+AS SELECT o.ord_date, s.salesman_id, s.name
+FROM salesman s, orders o
+WHERE s.salesman_id = o.salesman_id
+  AND purch_amt = ANY (
+  SELECT MAX(purch_amt)
+  FROM orders a
+  WHERE o.ord_date = a.ord_date
+  GROUP BY ord_date
+);
