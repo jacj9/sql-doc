@@ -164,3 +164,25 @@ CREATE INDEX idx_city ON addresses(city);
 
 -- Write a SQL query to create an index on the email column in the users table.
 CREATE INDEX idx_email ON users(email);
+
+
+-- 10. Drop an Index: Write a SQL query to remove an index from a table.
+
+--SQL Server
+DROP INDEX idx_salary ON employees;
+
+-- MySQL
+ALTER TABLE employees DROP INDEX idx_salary;
+
+-- MORE PRACTICE
+-- Write a SQL query to remove the index named idx_last_name from the employees table.
+DROP INDEX idx_last_name ON employees;
+
+-- Write a SQL query to drop the index on the product_name column in the products table.
+DROP INDEX idx_pname ON products;
+
+-- Write a SQL query to delete the composite index on the city and state columns in the addresses table.
+DROP INDEX idx_city ON addresses;
+
+-- Write a SQL query to remove the index on the email column in the users table.
+DROP INDEX idx_email ON users;
