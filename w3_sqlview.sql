@@ -72,7 +72,7 @@ WHERE s.salesman_id = o.salesman_id
 
 CREATE VIEW incentive
 AS SELECT DISTINCT salesman_id, name
-FROM elisalesman a
+FROM elitsalesman a
 WHERE 3 <= (
   SELECT COUNT(*)
   FROM elitsalesman b
