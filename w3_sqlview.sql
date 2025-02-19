@@ -66,3 +66,15 @@ WHERE s.salesman_id = o.salesman_id
   WHERE o.ord_date = a.ord_date
   GROUP BY ord_date
 );
+
+
+-- 8. From the following table, create a view to find the salesperson who deals with the customer with the highest order at least three times per day. Return salesperson ID and name.
+
+CREATE VIEW incentive
+AS SELECT DISTINCT salesman_id, name
+FROM elisalesman a
+WHERE 3 <= (
+  SELECT COUNT(*)
+  FROM elitsalesmane b
+  WHERE a.salesman_id = b.salesman_id
+);
