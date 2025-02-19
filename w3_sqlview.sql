@@ -75,6 +75,6 @@ AS SELECT DISTINCT salesman_id, name
 FROM elisalesman a
 WHERE 3 <= (
   SELECT COUNT(*)
-  FROM elitsalesmane b
+  FROM elitsalesman b
   WHERE a.salesman_id = b.salesman_id
 );
