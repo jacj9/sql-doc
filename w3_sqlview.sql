@@ -75,6 +75,18 @@ AS SELECT DISTINCT salesman_id, name
 FROM elitsalesman a
 WHERE 3 <= (
   SELECT COUNT(*)
-  FROM elitsalesman b
+  FROM customer b
   WHERE a.salesman_id = b.salesman_id
+);
+
+
+-- 9. From the following table, create a view to find all the customers who have the highest grade. Return all the fields of customer.
+CREATE VIEW highgrade
+AS SELECT *
+FROM customer a
+WHERE grade = ANY (
+  SELECT MAX(grade)
+  FROM customer b
+  WHERE a.customer_id = b.customer_id
+  GROUP BY b.customer_id
 );
