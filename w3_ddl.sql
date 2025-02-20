@@ -186,3 +186,13 @@ DROP INDEX idx_city ON addresses;
 
 -- Write a SQL query to remove the index on the email column in the users table.
 DROP INDEX idx_email ON users;
+
+
+-- 11. Rename a Table: Write a SQL query to rename an existing table.
+ALTER TABLE departments RENAME TO all_departments;
+
+-- 12. Add a Default Value: Write a SQL query to assign a default value to a column in an existing table.
+-- The DEFAULT value will be added to all new records, if no other value is specified.
+
+ALTER TABLE employees
+ADD CONSTRAINT df_first_name DEFAULT 'John' FOR first_name; -- The DEFAULT value "John' is added to column first_name 
