@@ -199,6 +199,12 @@ ADD CONSTRAINT df_first_name DEFAULT 'John' FOR first_name; -- The DEFAULT value
 
 
 -- 13. Remove a Constraint: Write a SQL query to remove a constraint from an existing table.
--- Drop constraint for employees table
+-- Drop default valut constraint for employees table
 ALTER TABLE employees
 DROP CONSTRAINT df_first_name;
+
+-- Remove the unique constraint "UC_Name" from the "employees" table
+ALTER TABLE employees
+DROP CONSTRAINT UC_Name; -- Delete the unique constraint on "Name"
+
+-- More practice on related problems
