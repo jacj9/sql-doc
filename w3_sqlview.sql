@@ -90,3 +90,9 @@ WHERE grade = ANY (
   WHERE a.customer_id = b.customer_id
   GROUP BY b.customer_id
 );
+
+-- 10. From the following table, create a view to count the number of salespeople in each city. Return city, number of salespersons.
+CREATE VIEW citysales
+AS SELECT city, COUNT(DISTINCT salesman_id)
+FROM salesman
+GROUP BY city;
