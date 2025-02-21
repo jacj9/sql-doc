@@ -196,3 +196,9 @@ ALTER TABLE departments RENAME TO all_departments;
 
 ALTER TABLE employees
 ADD CONSTRAINT df_first_name DEFAULT 'John' FOR first_name; -- The DEFAULT value "John' is added to column first_name 
+
+
+-- 13. Remove a Constraint: Write a SQL query to remove a constraint from an existing table.
+-- Drop constraint for employees table
+ALTER TABLE employees
+DROP CONSTRAINT df_first_name;
