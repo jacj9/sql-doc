@@ -227,7 +227,7 @@ AUTHORIZATION owner_name; --jajjk
 
 -- W3 Solution:
 -- Create a new schema named "HR".
-CERATE SCHEMA HR; -- Define a new schema for organizing database objects.
+CREATE SCHEMA HR; -- Define a new schema for organizing database objects.
 
 
 -- 15. Move a Table to a Schema: Write a SQL query to move a table from one schema to another.
