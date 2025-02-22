@@ -96,3 +96,12 @@ CREATE VIEW citysales
 AS SELECT city, COUNT(DISTINCT salesman_id)
 FROM salesman
 GROUP BY city;
+
+
+-- 11. From the following table, create a view to compute the average purchase amount and total purchase amount for each salesperson. Return name, average purchase and total purchase amount. (Assume all names are unique.).
+
+CREATE VIEW avgpurchamt
+AS SELECT name, AVG(purch_amt), SUM(purch_amt)
+FROM salesman, orders
+WHERE salesman.salesman_id = orders.salesman_id
+GROUP BY name; -- Group the result by name from 'salesman' table
