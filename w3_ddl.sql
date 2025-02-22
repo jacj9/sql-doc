@@ -208,3 +208,14 @@ ALTER TABLE employees
 DROP CONSTRAINT UC_Name; -- Delete the unique constraint on "Name"
 
 -- More practice on related problems
+-- Write a SQL query to remove the unique constraint from the email column in the users table.
+ALTER TABLE users DROP CONSTRAINT UC_Email;
+
+-- Write a SQL query to drop the NOT NULL constraint from the phone_number column in the customers table.
+ALTER TABLE customers ALTER COLUMN phone_number DROP NOT NULL;
+
+-- Write a SQL query to remove the foreign key constraint from the department_id column in the employees table.
+ALTER TABLE employees ALTER COLUMN department_id DROP FOREIGN KEY;
+
+-- Write a SQL query to delete the check constraint that ensures positive values in the price column of the products table.
+ALTER TABLE products DROP CHECK price_chk;
