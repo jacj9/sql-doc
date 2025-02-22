@@ -231,7 +231,7 @@ CERATE SCHEMA HR; -- Define a new schema for organizing database objects.
 
 
 -- 15. Move a Table to a Schema: Write a SQL query to move a table from one schema to another.
-ALTER SCHEMA HR TRANSFER emp_sch.employees;
+ALTER SCHEMA staff TRANSFER employees;
 
 -- W3 Solution:
 -- Move the "Employees" table to the "HR" schema.
