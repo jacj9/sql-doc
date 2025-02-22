@@ -105,3 +105,28 @@ AS SELECT name, AVG(purch_amt), SUM(purch_amt)
 FROM salesman, orders
 WHERE salesman.salesman_id = orders.salesman_id
 GROUP BY name; -- Group the result by name from 'salesman' table
+
+
+-- 12. From the following table, create a view to identify salespeople who work with multiple clients. Return all the fields of salesperson.
+CREATE VIEW scm
+AS SELECT *
+FROM salesman a
+WHERE salesman_id IN
+(SELECT salesman_id
+  FROM customer b
+  WHERE a.salesman_id = b.customer_id
+  HAVING COUNT(customer_id) > 1;
+);
+
+-- Other possible solution:
+-- Creating a VIEW named 'mcustomer'
+CREATE VIEW mcustomer
+-- Selecting all columns from the 'salesman' table as 'a'
+-- Filtering the rows where a salesman has more than one customer
+-- Using a subquery to count the number of customers for each salesman and comparing it to 1
+AS SELECT *
+FROM salesman a
+WHERE 1 <
+   (SELECT COUNT(*)
+     FROM customer b
+     WHERE a.salesman_id = b.salesman_id);
