@@ -219,3 +219,12 @@ ALTER TABLE employees ALTER COLUMN department_id DROP FOREIGN KEY;
 
 -- Write a SQL query to delete the check constraint that ensures positive values in the price column of the products table.
 ALTER TABLE products DROP CHECK price_chk;
+
+
+-- 14. Create a Schema: Write a SQL query to create a new schema in the database.
+CREATE SCHEMA emp_sch -- new schema name
+AUTHORIZATION owner_name; --jajjk
+
+-- W3 Solution:
+-- Create a new schema named "HR".
+CERATE SCHEMA HR; -- Define a new schema for organizing database objects.
