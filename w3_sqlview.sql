@@ -141,3 +141,5 @@ WHERE 1 <=
   (SELECT COUNT(*)
   FROM customer a
   WHERE a.customer_id = customer.customer_id);
+
+-- Another attempt
