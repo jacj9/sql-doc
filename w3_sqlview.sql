@@ -130,3 +130,14 @@ WHERE 1 <
    (SELECT COUNT(*)
      FROM customer b
      WHERE a.salesman_id = b.salesman_id);
+
+
+-- 13. From the following table, create a view that shows all matching customers with salespeople, ensuring that at least one customer in the city of the customer is served by the salesperson in the city of the salesperson.
+
+CREATE VIEW custsales
+AS SELECT customer.city, salesman.city
+FROM customer, salesman
+WHERE 1 <= 
+  (SELECT COUNT(*)
+  FROM customer a
+  WHERE a.customer_id = customer.customer_id);
