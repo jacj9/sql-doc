@@ -147,3 +147,7 @@ CREATE VIEW numsales (custcity, salescity)
 AS SELECT customer.city, salesman.city
 FROM customer a, salesman b
 WHERE a.salesman_id = b.salesman_id;
+
+
+-- 14. From the following table, create a view to display the number of orders per day. Return order date and number of orders.
+
