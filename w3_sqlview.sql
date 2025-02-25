@@ -143,3 +143,7 @@ WHERE 1 <=
   WHERE a.customer_id = customer.customer_id);
 
 -- Another attempt
+CREATE VIEW numsales (custcity, salescity)
+AS SELECT customer.city, salesman.city
+FROM customer a, salesman b
+WHERE a.salesman_id = b.salesman_id;
