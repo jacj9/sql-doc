@@ -150,4 +150,7 @@ WHERE a.salesman_id = b.salesman_id;
 
 
 -- 14. From the following table, create a view to display the number of orders per day. Return order date and number of orders.
-
+CREATE VIEW numord (ord_date, odcount)
+AS SELECT ord_date, COUNT(ord_no)
+FROM orders
+GROUP BY ord_date;
