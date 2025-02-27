@@ -154,3 +154,15 @@ CREATE VIEW numord (ord_date, odcount)
 AS SELECT ord_date, COUNT(ord_no)
 FROM orders
 GROUP BY ord_date;
+
+
+-- 15. From the following table, create a view to find the salespeople who placed orders on October 10th, 2012. Return all the fields of salesperson.
+
+CREATE VIEW sorders AS
+SELECT *
+FROM salesman a
+WHERE a.salesman_id IN (
+  SELECT b.salesman_id
+  FROM orders b
+  WHERE a.salesman_id = b.salesman_id AND b.ord_date = '2012-10-10'
+);
