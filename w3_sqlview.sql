@@ -166,3 +166,16 @@ WHERE a.salesman_id IN (
   FROM orders b
   WHERE a.salesman_id = b.salesman_id AND b.ord_date = '2012-10-10'
 );
+
+
+-- 16. From the following table, create a view to find the salespersons who issued orders on either August 17th, 2012 or October 10th, 2012. Return salesperson ID, order number and customer ID.
+
+CREATE VIEW saleorders
+AS SELECT salesman_id, ord_no, customer_id
+FROM orders
+WHERE ord_date IN ('2012-08-17', '2012-10-10');
+
+CREATE VIEW saleorders
+AS SELECT salesman_id, ord_no, customer_id
+FROM orders
+WHERE ord_date = '2012-08-17' OR ord_date = '2012-10-10';
