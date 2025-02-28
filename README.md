@@ -11,7 +11,7 @@ Basics to review:
 
 Query a Database: FROM, ORDER BY, SELECT
 
-Apply Filters: AND, OR, BETWEEN, =, >, >=, <=, LIKE, NOT, <>, !=, %, _, WHERE
+Apply Filters: AND, OR, BETWEEN, =, >, >=, <=, LIKE, NOT, <>, !=, % (wildcard), _ (wildcard), WHERE
 
 Join tables: FULL OUTER JOIN, INNER JOIN, LEFT JOIN, RIGHT JOIN
 
