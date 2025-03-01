@@ -4,4 +4,4 @@
 
 SELECT first_name, last_name, city, state, country
 FROM salesperson a
-LEFT JOIN address ON a.salesman_id = b.salesman_id;
+LEFT JOIN address ON a.salesperson_id = b.salesperson_id;
