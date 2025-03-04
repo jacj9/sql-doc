@@ -24,3 +24,6 @@ WHERE sale_amt <
 
 
 -- Retry exercise 2 using LIMIT OFFSET
+SELECT MAX(sale_amt) AS ThirdHighestSale
+FROM salemast
+LIMIT 1 OFFSET 2; -- Display one value starting from third value
