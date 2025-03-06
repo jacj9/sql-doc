@@ -37,11 +37,11 @@ FROM salemast;
 
 -- 4. From the following table, write a SQL query to find the marks, which appear at least thrice one after another without interruption. Return the number.
 
-SELECT DISTINCT mark
+SELECT DISTINCT marks
 FROM (
-  SELECT mark,
-          LAG(mark) OVER (ORDER BY id) AS prev_mark,
-          LEAD(mark) OVER (ORDER BY id) AS next_mark
-  FROM marks_table
+  SELECT marks,
+          LAG(marks) OVER (ORDER BY student_id) AS prev_marks,
+          LEAD(marks) OVER (ORDER BY student_id) AS next_marks
+  FROM logs
   ) subquery
-WHERE mark = prev_mark AND MARK = next_nark;
+WHERE marks = prev_marks AND marks = next_narks;
