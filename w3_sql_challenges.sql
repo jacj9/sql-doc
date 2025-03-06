@@ -45,3 +45,8 @@ FROM (
   FROM logs
   ) subquery
 WHERE marks = prev_marks AND marks = next_narks;
+
+-- Another Solution to get clarification tomorrow
+SELECT DISTINCT L1.marks AS  ConsecutiveNums
+FROM (logs L1 JOIN logs L2 ON L1.marks = L2.marks AND L1.student_id = L2.student_id-1)
+JOIN logs L3 ON L1.marks = L3.marks AND L2.student_id = L3.student_id-1;
