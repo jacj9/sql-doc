@@ -50,3 +50,11 @@ WHERE marks = prev_marks AND marks = next_narks;
 SELECT DISTINCT L1.marks AS  ConsecutiveNums
 FROM (logs L1 JOIN logs L2 ON L1.marks = L2.marks AND L1.student_id = L2.student_id-1) -- L1 and L2 match in marks, and L2 student_id shoulb be exactly one more than L1's student_id
 JOIN logs L3 ON L1.marks = L3.marks AND L2.student_id = L3.student_id-1; -- L1 and L3 should match in marks, and L3 shold be exactly one more L2's student_id
+
+
+-- 5. From the following table, write a SQL query to find all the duplicate emails (no upper case letters) of the employees. Return email id.
+
+SELECT email_id
+FROM employees
+GROUP BY email_id
+HAVING COUNT(email_id)>1;
