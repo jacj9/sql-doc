@@ -58,3 +58,12 @@ SELECT email_id
 FROM employees
 GROUP BY email_id
 HAVING COUNT(email_id)>1;
+
+
+-- 6. From the following tables, write a SQL query to find those customers who never ordered anything. Return customer name.
+
+SELECT customer_name
+FROM customers
+WHERE customer_id NOT IN
+(SELECT customer_id
+  FROM orders);
