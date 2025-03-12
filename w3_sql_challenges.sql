@@ -67,3 +67,23 @@ FROM customers
 WHERE customer_id NOT IN
 (SELECT customer_id
   FROM orders);
+
+
+-- 7. From the following table, write a SQL query to remove all the duplicate emails of employees keeping the unique email with the lowest employee id. Return employee id and unique emails.
+CREATE TABLE IF NOT EXIST employees (
+    employee_id INT PRIMARY KEY,
+    employee_name VARCHAR(255) NOT NULL,
+    email_id VARCHAR(255) NOT NULL
+);
+
+INSERT INTO employees (employee_id, employee_name, email_id) VALUES
+(101, 'Liam Alton', 'li.al@abc.com'),
+  (102, 'Josh Day', 'jo.da@abc.com'),
+  (103, 'Sean Mann', 'se.ma@abc.com'),
+  (104, 'Evan Blake', 'ev.bl@abc.com'),
+  (105, 'Toby Scott', 'jo.da@abc.com');
+
+SELECT DISTINCT email_id, employee_id
+FROM employees;
+
+-- Retry again with 
