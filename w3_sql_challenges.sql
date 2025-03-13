@@ -87,3 +87,11 @@ SELECT DISTINCT email_id, employee_id
 FROM employees;
 
 -- Retry again with 
+
+SELECT * FROM employees;
+
+DELETE e1 FROM employees e1,  employees e2
+WHERE
+    e1.email_id = e2.email_id AND e1.employee_id > e2.employee_id;
+
+SELECT * FROM employees;
