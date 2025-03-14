@@ -86,12 +86,13 @@ INSERT INTO employees (employee_id, employee_name, email_id) VALUES
 SELECT DISTINCT email_id, employee_id
 FROM employees;
 
--- Retry again with 
+-- Retry again
 
 SELECT * FROM employees;
 
-DELETE e1 FROM employees e1,  employees e2
+DELETE e1 FROM employees e1,  employees e2 -- This query deletes duplicate rows from the employees table based on the email_id column.
 WHERE
-    e1.email_id = e2.email_id AND e1.employee_id > e2.employee_id;
+    e1.email_id = e2.email_id  -- The condition identifies rows with duplicate email_id values
+  AND e1.employee_id > e2.employee_id; -- The condition ensures that the row with the larger employee_id is the one to be deleted
 
 SELECT * FROM employees;
