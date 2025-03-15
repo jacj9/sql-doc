@@ -8,10 +8,23 @@ CREATE TABLE IF NOT EXIST salespersons (
 );
 
 INSERT INTO salesperson (salesperson_id, first_name, last_name) VALUE
-  (1, 'Green', 'Wright');
-  (2, 'Jones', 'Collins');
+  (1, 'Green', 'Wright'),
+  (2, 'Jones', 'Collins'),
   (3, 'Bryant', 'Davis');
 
+CREATE TABLE IF NOT EXIST address (
+  address_id INT PRIMARY KEY,
+  salesperson_id INT NOT NULL,
+  city VARCHAR(50) NOT NULL,
+  state VARCHAR(50) NOT NULL,
+  country VARCHAR(50) NOT NULL
+);
+
+INSERT INTO address (address_id, salesperson_id, city, state, country) VALUE
+  (1, 2, 'Los Angeles', 'California', 'USA'),
+  (2, 3, 'Denver', 'Colorado', 'USA'),
+  (3, 4, 'Atlanta', 'Georgia', 'USA');
+  
 
 SELECT first_name, last_name, city, state, country
 FROM salesperson a
