@@ -1,18 +1,18 @@
 """Practicing sql exercises in this document. The sql challenge exercises are from https://www.w3resource.com/sql-exercises/challenges-1/index.php"""
 
 -- 1. From the following tables, write a SQL query to find the information on each salesperson of ABC Company. Return name, city, country and state of each salesperson.
-CREATE TABLE IF NOT EXIST salespersons (
+CREATE TABLE IF NOT EXISTS salespersons (
   salesperson_id INT PRIMARY KEY,
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL
 );
 
-INSERT INTO salesperson (salesperson_id, first_name, last_name) VALUE
+INSERT INTO salespersons (salesperson_id, first_name, last_name) VALUE
   (1, 'Green', 'Wright'),
   (2, 'Jones', 'Collins'),
   (3, 'Bryant', 'Davis');
 
-CREATE TABLE IF NOT EXIST address (
+CREATE TABLE IF NOT EXISTS address (
   address_id INT PRIMARY KEY,
   salesperson_id INT NOT NULL,
   city VARCHAR(50) NOT NULL,
@@ -27,8 +27,8 @@ INSERT INTO address (address_id, salesperson_id, city, state, country) VALUE
   
 
 SELECT first_name, last_name, city, state, country
-FROM salesperson a
-LEFT JOIN address ON a.salesperson_id = b.salesperson_id;
+FROM salespersons a
+LEFT JOIN address b ON a.salesperson_id = b.salesperson_id;
 
 
 -- 2. From the following table, write a SQL query to find the third highest sale. Return sale amount.
