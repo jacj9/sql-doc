@@ -1,6 +1,17 @@
 """Practicing sql exercises in this document. The sql challenge exercises are from https://www.w3resource.com/sql-exercises/challenges-1/index.php"""
 
 -- 1. From the following tables, write a SQL query to find the information on each salesperson of ABC Company. Return name, city, country and state of each salesperson.
+CREATE TABLE IF NOT EXIST salespersons (
+  salesperson_id INT PRIMARY KEY,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL
+);
+
+INSERT INTO salesperson (salesperson_id, first_name, last_name) VALUE
+  (1, 'Green', 'Wright');
+  (2, 'Jones', 'Collins');
+  (3, 'Bryant', 'Davis');
+
 
 SELECT first_name, last_name, city, state, country
 FROM salesperson a
@@ -96,3 +107,4 @@ WHERE
   AND e1.employee_id > e2.employee_id; -- The condition ensures that the row with the larger employee_id is the one to be deleted
 
 SELECT * FROM employees;
+
