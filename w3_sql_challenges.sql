@@ -39,11 +39,18 @@ CREATE TABLE IF NOT EXISTS salemast (
   sale_amt INT NOT NULL
 );
 
+INSERT INTO salemast (sale_id, employee_id, sale_date, sale_amt) VALUE
+  (1, 1000, '2012-03-08', 4500),
+  (2, 1001, '2012-03-09', 5500),
+  (3, 1003, '2012-04-10', 3500),
+  (3, 1003, '2012-04-10', 2500);
+
 SELECT MAX(sale_amt) AS ThirdHighestSale
   FROM salemast
   LIMIT 1
   OFFSET 2;
 
+-- Other query:
 SELECT MAX(sale_amt) AS ThirdHighestSale
 FROM salemast
 WHERE sale_amt <
