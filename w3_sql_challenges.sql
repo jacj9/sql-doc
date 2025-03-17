@@ -32,6 +32,17 @@ LEFT JOIN address b ON a.salesperson_id = b.salesperson_id;
 
 
 -- 2. From the following table, write a SQL query to find the third highest sale. Return sale amount.
+CREATE TABLE IF NOT EXISTS salemast (
+  sale_id INT PRIMARY KEY,
+  employee_id INT NOT NULL,
+  sale_date DATETIME NOT NULL,
+  sale_amt INT NOT NULL
+);
+
+SELECT MAX(sale_amt) AS ThirdHighestSale
+  FROM salemast
+  LIMIT 1
+  OFFSET 2;
 
 SELECT MAX(sale_amt) AS ThirdHighestSale
 FROM salemast
