@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS salespersons (
   last_name VARCHAR(50) NOT NULL
 );
 
-INSERT INTO salespersons (salesperson_id, first_name, last_name) VALUE
+INSERT INTO salespersons (salesperson_id, first_name, last_name) VALUES
   (1, 'Green', 'Wright'),
   (2, 'Jones', 'Collins'),
   (3, 'Bryant', 'Davis');
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS address (
   country VARCHAR(50) NOT NULL
 );
 
-INSERT INTO address (address_id, salesperson_id, city, state, country) VALUE
+INSERT INTO address (address_id, salesperson_id, city, state, country) VALUES
   (1, 2, 'Los Angeles', 'California', 'USA'),
   (2, 3, 'Denver', 'Colorado', 'USA'),
   (3, 4, 'Atlanta', 'Georgia', 'USA');
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS salemast (
   sale_amt INT NOT NULL
 );
 
-INSERT INTO salemast (sale_id, employee_id, sale_date, sale_amt) VALUE
+INSERT INTO salemast (sale_id, employee_id, sale_date, sale_amt) VALUES
   (1, 1000, '2012-03-08', 4500),
   (2, 1001, '2012-03-09', 5500),
   (3, 1003, '2012-04-10', 3500),
@@ -72,7 +72,18 @@ LIMIT 1 OFFSET 2; -- Display one value starting from third value
 
 
 -- 3. From the following table, write a SQL query to find the Nth highest sale. Return sale amount.
+CREATE TABLE IF NOT EXISTS salemast (
+  sale_id INT PRIMARY KEY,
+  employee_id INT NOT NULL,
+  sale_date DATETIME NOT NULL,
+  sale_amt INT NOT NULL
+);
 
+INSERT INTO salemast (sale_id, employee_id, sale_date, sale_amt) VALUES
+  (1, 1000, '2012-03-08', 4500),
+  (2, 1001, '2012-03-09', 5500),
+  (3, 1003, '2012-04-10', 3500);
+  
 SELECT MAX(sale_amt) AS getNthHighestSaleAmt
 FROM salemast;
 
