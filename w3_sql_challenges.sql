@@ -89,6 +89,20 @@ FROM salemast;
 
 
 -- 4. From the following table, write a SQL query to find the marks, which appear at least thrice one after another without interruption. Return the number.
+CREATE TABLE IF NOT EXISTS logs (
+  student_id INT PRIMARY KEY,
+  marks INT NOT NULL
+);
+
+INSERT INTO logs (student_id, marks) VALUES
+      (101, 83),
+      (102, 79),
+      (103, 83),
+      (104, 83),
+      (105,)83),
+      (106, 79),
+      (107, 79),
+      (108,83);
 
 SELECT DISTINCT marks
 FROM (
