@@ -99,10 +99,10 @@ INSERT INTO logs (student_id, marks) VALUES
       (102, 79),
       (103, 83),
       (104, 83),
-      (105,)83),
+      (105, 83),
       (106, 79),
       (107, 79),
-      (108,83);
+      (108, 83);
 
 SELECT DISTINCT marks
 FROM (
@@ -111,7 +111,7 @@ FROM (
           LEAD(marks) OVER (ORDER BY student_id) AS next_marks
   FROM logs
   ) subquery
-WHERE marks = prev_marks AND marks = next_narks;
+WHERE marks = prev_marks AND marks = next_marks;
 
 -- Another Solution
 SELECT DISTINCT L1.marks AS  ConsecutiveNums
