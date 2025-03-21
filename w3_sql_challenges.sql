@@ -120,6 +120,19 @@ JOIN logs L3 ON L1.marks = L3.marks AND L2.student_id = L3.student_id-1; -- L1 a
 
 
 -- 5. From the following table, write a SQL query to find all the duplicate emails (no upper case letters) of the employees. Return email id.
+CREATE TABLE IF NOT EXISTS salespersons (
+  salesperson_id INT PRIMARY KEY,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL
+);
+
+INSERT INTO salespersons (salesperson_id, first_name, last_name) VALUES
+  (101, 'Liam Alton', 'li.al@abc.com'),
+  (102, 'Josh Day', 'jo.da@abc.com'),
+  (103, 'Sean Mann', 'se.ma@abc.com'),
+  (104. 'Evan Blake', 'ev.bl@abc.com'),
+  (105, 'Toby Scott', 'jo.da@abc.com');
+
 
 SELECT email_id
 FROM employees
