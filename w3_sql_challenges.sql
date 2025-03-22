@@ -177,3 +177,23 @@ WHERE
 
 SELECT * FROM employees;
 
+
+-- 8. From the following table, write a SQL query to find all dates' city ID with higher pollution compared to its previous dates (yesterday). Return city ID, date and pollution.
+
+CREATE TABLE IF NOT EXISTS so2_pollution (
+  city_id INT PRIMARY KEY,
+  date DATETIME NOT NULL,
+  so2_amt INT NOT NULL
+);
+
+INSERT INTO so2_pollution (city_id, date, so2_amt) VALUES
+(701, '2015-10-15', 5),
+(702, '2015-10-16', 7),
+(703, '2015-10-17', 9),
+(704, '2018-10-18', 15),
+(705, '2015-10-19', 14);
+
+SELECT city_id, date, so2_amt
+FROM so2_pollution
+WHERE so2_amt >
+(so2)
