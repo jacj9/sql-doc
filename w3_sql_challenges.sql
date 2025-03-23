@@ -193,7 +193,16 @@ INSERT INTO so2_pollution (city_id, date, so2_amt) VALUES
 (704, '2018-10-18', 15),
 (705, '2015-10-19', 14);
 
-SELECT city_id, date, so2_amt
-FROM so2_pollution
-WHERE so2_amt >
-(so2)
+SELECT 
+    p1.city_id, 
+    p1.date, 
+    p1.so2_amt
+FROM 
+    so2_pollution p1
+JOIN -- links the table to itself, allowing us to compare a record with its "previous" record.
+    so2_pollution p2
+ON 
+    p1.city_id = p2.city_id AND p1.date = DATE_ADD(p2.date, INTERVAL 1 DAY) -- Ensure that the two rows being compared are one day apart.
+WHERE 
+    p1.so2_amt > p2.so2_amt; -- Filters out records where the pollution level so2_amt is not greater than the previous day's pollution level.
+
