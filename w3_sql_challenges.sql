@@ -153,7 +153,17 @@ CREATE TABLE IF NOT EXISTS orders (
   order_amount INT NOT NULL
 );
 
+INSERT INTO customers (customer_id, customer_name) VALUES
+  (101, 'Liam'),
+  (102, 'Josh'),
+  (103, 'Sean'),
+  (104, 'Evan'),
+  (105, 'Toby');
 
+INSERT INTO orders (order_id, customer_id, order_date, order_amount) VALUES
+  (401, 103, '2012-03-08', 4500),
+  (402, 101, '2012-09-15', 3650),
+  (403, 102, '2012-06-27', 4800);
 
 SELECT customer_name
 FROM customers
