@@ -141,6 +141,19 @@ HAVING COUNT(email_id)>1;
 
 
 -- 6. From the following tables, write a SQL query to find those customers who never ordered anything. Return customer name.
+CREATE TABLE IF NOT EXISTS customers (
+  customer_id INT PRIMARY KEY,
+  customer_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  order_id INT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  order_date DATETIME NOT NULL,
+  order_amount INT NOT NULL
+);
+
+
 
 SELECT customer_name
 FROM customers
@@ -150,7 +163,7 @@ WHERE customer_id NOT IN
 
 
 -- 7. From the following table, write a SQL query to remove all the duplicate emails of employees keeping the unique email with the lowest employee id. Return employee id and unique emails.
-CREATE TABLE IF NOT EXIST employees (
+CREATE TABLE IF NOT EXISTS employees (
     employee_id INT PRIMARY KEY,
     employee_name VARCHAR(255) NOT NULL,
     email_id VARCHAR(255) NOT NULL
@@ -205,4 +218,5 @@ ON
     p1.city_id = p2.city_id AND p1.date = DATE_ADD(p2.date, INTERVAL 1 DAY) -- Ensure that the two rows being compared are one day apart.
 WHERE 
     p1.so2_amt > p2.so2_amt; -- Filters out records where the pollution level so2_amt is not greater than the previous day's pollution level.
+
 
