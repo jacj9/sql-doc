@@ -230,3 +230,28 @@ WHERE
     p1.so2_amt > p2.so2_amt; -- Filters out records where the pollution level so2_amt is not greater than the previous day's pollution level.
 
 
+-- A salesperson is a person whose job is to sell products or services. From the following tables, write a SQL query to find the top 10 salesperson that have made highest sale. Return their names and total sale amount.
+CREATE TABLE IF NOT EXISTS sales (
+  transaction_id INT PRIMARY KEY,
+  salesman_id INT NOT NULL,
+  sale_amount FLOAT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS salesman (
+  salesman_id INT PRIMARY KEY,
+  salesman_name VARCHAR(50)
+);
+
+INSERT INTO sales (transaction_id, salesman_id, sale_amount) VALUES
+  (501, 18, 5200.00),
+  (502, 50. 5566.00),
+  (503, 38, 8400.00),
+  (599, 24, 16745.00)
+  (600, 12, 14900.00);
+
+INSERT INTO salesman (salesman_id, salesman_name) VALUES
+ (11, 'Jonathan Goodwin'),
+  (12, 'Adam Hughes'),
+  (13, 'Mark Davenport'),
+  (59, 'Cleveland Hart'),
+  (60, 'Marion Gregory');      
