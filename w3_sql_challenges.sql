@@ -254,4 +254,11 @@ INSERT INTO salesman (salesman_id, salesman_name) VALUES
   (12, 'Adam Hughes'),
   (13, 'Mark Davenport'),
   (59, 'Cleveland Hart'),
-  (60, 'Marion Gregory');      
+  (60, 'Marion Gregory');
+
+SELECT a.salesman_name, SUM(b.sale_amount) AS total_amount
+FROM salesman a
+  NATURAL JOIN sales b
+GROUP BY a.salesman_name
+ORDER BY total_amount DESC
+LIMIT 10;
