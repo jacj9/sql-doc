@@ -230,7 +230,7 @@ WHERE
     p1.so2_amt > p2.so2_amt; -- Filters out records where the pollution level so2_amt is not greater than the previous day's pollution level.
 
 
--- A salesperson is a person whose job is to sell products or services. From the following tables, write a SQL query to find the top 10 salesperson that have made highest sale. Return their names and total sale amount.
+-- 9. A salesperson is a person whose job is to sell products or services. From the following tables, write a SQL query to find the top 10 salesperson that have made highest sale. Return their names and total sale amount.
 CREATE TABLE IF NOT EXISTS sales (
   transaction_id INT PRIMARY KEY,
   salesman_id INT NOT NULL,
@@ -262,3 +262,27 @@ FROM salesman a
 GROUP BY a.salesman_name
 ORDER BY total_amount DESC
 LIMIT 10;
+
+
+-- 10. An active customer is simply someone who has bought company's product once before and has returned to make another purchase within 10 days.
+-- From the following table, write a SQL query to identify the active customers. Show the list of customer IDs of active customers.
+
+CREATE TABLE IF NOT EXISTS orders (
+  order_id INT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  item_desc VARCHAR(50) NOT NULL,
+  order_date DATETIME NOT NULL
+);
+
+INSERT INTO orders (order_id, customer_id, item_desc, order_date) VALUES
+(101, 2109, 'juice', '2020-03-03'),
+(102, 2139, 'chocolate', '2019-03-18'),
+(103, 2120, 'juice', '2019-03-18'),
+(199, 2130, 'juice', '2019-03-16'),
+(200, 2117, 'cake', '2021-03-10');
+
+-- More information needed. Review again.
+SELECT DISTINCT a.customer_id
+FROM orders a, orders  b
+where (a.customer_id=b.customer_id) AND (a.order_id!=b.order_id) AND (b.order_date - a.order_date) BETWEEN 0 AND 10
+ORDER BY customer_id;
