@@ -281,7 +281,7 @@ INSERT INTO orders (order_id, customer_id, item_desc, order_date) VALUES
 (199, 2130, 'juice', '2019-03-16'),
 (200, 2117, 'cake', '2021-03-10');
 
--- More information needed. Review again.
+
 SELECT DISTINCT a.customer_id
 FROM orders a, orders  b
 where (a.customer_id=b.customer_id) AND (a.order_id!=b.order_id) AND (b.order_date - a.order_date) BETWEEN 0 AND 10
