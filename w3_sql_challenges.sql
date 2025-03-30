@@ -301,3 +301,25 @@ select * from tablefortest;
 
 SELECT srno, pos_neg_val, -pos_neg_val AS converted_signed_value
 FROM tablefortest;
+
+
+-- 12. From the following table, write a SQL query to find the century of a given date. Return the century.
+DROP TABLE IF EXISTS tablefortest;
+CREATE TABLE tablefortest (id INT, date_of_birth DATE);
+INSERT INTO tablefortest VALUES (1, '1907-08-15');
+INSERT INTO tablefortest VALUES (2, '1883-06-27');
+INSERT INTO tablefortest VALUES (3, '1900-01-01');
+INSERT INTO tablefortest VALUES (4, '1901-01-01');
+INSERT INTO tablefortest VALUES (5, '2005-09-01');
+INSERT INTO tablefortest VALUES (6, '1775-11-23');
+INSERT INTO tablefortest VALUES (7, '1800-01-01');
+SELECT * FROM tablefortest;
+
+-- Review what does this query do
+SELECT ID, date_of_birth,
+       CEIL(YEAR(date_of_birth) / 100) AS century
+FROM tablefortest;
+
+-- Review what does this query do
+SELECT id, date_of_birth, (SUBSTRING((EXTRACT(YEAR FROM(date_of_birth))-1),1,2))+1 AS Century 
+FROM tablefortest;
