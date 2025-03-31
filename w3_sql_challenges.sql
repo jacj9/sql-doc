@@ -317,7 +317,10 @@ SELECT * FROM tablefortest;
 
 -- Review what does this query do
 SELECT ID, date_of_birth,
-       CEIL(YEAR(date_of_birth) / 100) AS century
+       CEIL(YEAR(date_of_birth) / 100) AS century 
+  -- YEAR(date_of_birth) extracts the year from the date_of_birth
+  -- Dividing this year by 100 determines the century (e.g., 1999 divided by 100 equals 19.99)
+  -- The CEIL() function rounds up the result to the next integer. So, the year 1999 falls into the 20th century, and the year 2000 falls into the 21st century.
 FROM tablefortest;
 
 -- Review what does this query do
