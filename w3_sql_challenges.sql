@@ -326,3 +326,14 @@ FROM tablefortest;
 -- Review what does this query do
 SELECT id, date_of_birth, (SUBSTRING((EXTRACT(YEAR FROM(date_of_birth))-1),1,2))+1 AS Century 
 FROM tablefortest;
+-- SELECT id, date_of_birth: This retrieves the id and date_of_birth columns from the table tablefortest.
+
+-- EXTRACT(YEAR FROM(date_of_birth)): This extracts the year from the date_of_birth. For example, if the date of birth is 1987-05-23, it will extract 1987.
+
+-- (EXTRACT(YEAR FROM(date_of_birth))-1): This subtracts 1 from the extracted year. For example, 1987 - 1 = 1986.
+
+-- SUBSTRING((...),1,2): This retrieves the first two characters of the resulting year after subtraction. For example, from 1986, it would extract 19.
+
+-- +1 AS Century: This adds 1 to the extracted first two digits. So, 19 + 1 = 20, meaning the century is the 20th century.
+
+-- FROM tablefortest: This specifies the table tablefortest from which the data is retrieved.
