@@ -337,3 +337,13 @@ FROM tablefortest;
 -- +1 AS Century: This adds 1 to the extracted first two digits. So, 19 + 1 = 20, meaning the century is the 20th century.
 
 -- FROM tablefortest: This specifies the table tablefortest from which the data is retrieved.
+
+
+""" 13. From the following table, write a SQL query to find the even or odd values. Return "Even" for even number and "Odd" for odd number."""
+
+SELECT srno, col_val,
+       CASE 
+           WHEN column_name % 2 = 0 THEN 'Even' -- checks if the number is divisible by 2 (even)
+           ELSE 'Odd'
+       END AS even_odd -- CASE statement assigns "Even" or "Odd" based on the condition.
+FROM tablefortest;
