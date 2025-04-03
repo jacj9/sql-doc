@@ -326,6 +326,8 @@ FROM tablefortest;
 -- Review what does this query do
 SELECT id, date_of_birth, (SUBSTRING((EXTRACT(YEAR FROM(date_of_birth))-1),1,2))+1 AS Century 
 FROM tablefortest;
+SELECT id, date_of_birth, (SUBSTRING((EXTRACT(YEAR FROM(date_of_birth))-1),1,2))+1 AS Century
+  FROM tablefortest;
 -- SELECT id, date_of_birth: This retrieves the id and date_of_birth columns from the table tablefortest.
 
 -- EXTRACT(YEAR FROM(date_of_birth)): This extracts the year from the date_of_birth. For example, if the date of birth is 1987-05-23, it will extract 1987.
@@ -341,6 +343,23 @@ FROM tablefortest;
 
 """ 13. From the following table, write a SQL query to find the even or odd values. Return "Even" for even number and "Odd" for odd number."""
 
+  DROP TABLE IF EXISTS tablefortest;
+CREATE TABLE tablefortest(srno int,  col_val int);
+INSERT INTO tablefortest VALUES (1, 56);
+INSERT INTO tablefortest VALUES (2, 74);
+INSERT INTO tablefortest VALUES (3, 15);
+INSERT INTO tablefortest VALUES (4, 51);
+INSERT INTO tablefortest VALUES (5, 9);
+INSERT INTO tablefortest VALUES (6, 32);
+SELECT * FROM tablefortest;
+
+SELECT srno, col_val,
+     CASE WHEN col_val%2=0 THEN 'Even'
+          WHEN col_val%2=1 THEN 'Odd'
+          END AS Even_Odd
+     FROM tablefortest;
+
+-- Another possible solution for ex.13
 SELECT srno, col_val,
        CASE 
            WHEN column_name % 2 = 0 THEN 'Even' -- checks if the number is divisible by 2 (even)
