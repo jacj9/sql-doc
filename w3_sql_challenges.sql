@@ -353,9 +353,11 @@ INSERT INTO tablefortest VALUES (5, 9);
 INSERT INTO tablefortest VALUES (6, 32);
 SELECT * FROM tablefortest;
 
+-- A CASE statement in SQL is a way to perform conditional logic within queries. It acts like an if-then-else statement, allowing you to evaluate different conditions and return specific values based on those conditions.
+
 SELECT srno, col_val,
-     CASE WHEN col_val%2=0 THEN 'Even'
-          WHEN col_val%2=1 THEN 'Odd'
+     CASE WHEN col_val%2=0 THEN 'Even' -- If col_val is divisible by 2 (col_val % 2 = 0), it assigns 'Even' to the Even_Odd column.
+          WHEN col_val%2=1 THEN 'Odd' -- If col_val is not divisible by 2 (col_val % 2 = 1), it assigns 'Odd' to the Even_Odd column.
           END AS Even_Odd
      FROM tablefortest;
 
