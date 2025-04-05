@@ -368,3 +368,9 @@ SELECT srno, col_val,
            ELSE 'Odd'
        END AS even_odd -- CASE statement assigns "Even" or "Odd" based on the condition.
 FROM tablefortest;
+
+-- On my own
+SELECT srno, col_val,
+CASE WHEN col_val%2=0 THEN 'EVEN'
+ELSE 'ODD'
+FROM tablefortest;
