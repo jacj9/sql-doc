@@ -374,3 +374,9 @@ SELECT srno, col_val,
 CASE WHEN col_val%2=0 THEN 'EVEN'
 ELSE 'ODD'
 FROM tablefortest;
+
+SELECT srno, col_val,
+  CASE WHEN col_val%2 = 0 THEN 'EVEN'
+      WHEN col_val%2=1 THEN 'ODD'
+      END AS even_odd
+FROM tablefortest;
