@@ -323,11 +323,13 @@ SELECT ID, date_of_birth,
   -- The CEIL() function rounds up the result to the next integer. So, the year 1999 falls into the 20th century, and the year 2000 falls into the 21st century.
 FROM tablefortest;
 
+SELECT ID, date_of_birth,
+  CEIL(YEAR(date_of_birth)/100) AS century
+FROM tablefortest;
+
 -- Review what does this query do
 SELECT id, date_of_birth, (SUBSTRING((EXTRACT(YEAR FROM(date_of_birth))-1),1,2))+1 AS Century 
 FROM tablefortest;
-SELECT id, date_of_birth, (SUBSTRING((EXTRACT(YEAR FROM(date_of_birth))-1),1,2))+1 AS Century
-  FROM tablefortest;
 -- SELECT id, date_of_birth: This retrieves the id and date_of_birth columns from the table tablefortest.
 
 -- EXTRACT(YEAR FROM(date_of_birth)): This extracts the year from the date_of_birth. For example, if the date of birth is 1987-05-23, it will extract 1987.
