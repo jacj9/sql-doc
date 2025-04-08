@@ -342,6 +342,9 @@ FROM tablefortest;
 
 -- FROM tablefortest: This specifies the table tablefortest from which the data is retrieved.
 
+SELECT id, date_of_birth, (SUBSTRING(EXTRACT(YEAR FROM(date_of_birth)-1)1, 2))+1 AS cemtkury
+  FROM tablefortest;
+
 
 """ 13. From the following table, write a SQL query to find the even or odd values. Return "Even" for even number and "Odd" for odd number."""
 
