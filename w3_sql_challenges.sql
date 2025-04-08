@@ -385,3 +385,18 @@ SELECT srno, col_val,
       WHEN col_val%2=1 THEN 'ODD'
       END AS even_odd
 FROM tablefortest;
+
+
+-- 14. From the following table, write a SQL query to find the unique marks. Return the unique marks.
+DROP TABLE IF EXISTS student_test;
+CREATE TABLE student_test(student_id int, marks_achieved int);
+INSERT INTO student_test VALUES (1, 56);
+INSERT INTO student_test VALUES (2, 74);
+INSERT INTO student_test VALUES (3, 15);
+INSERT INTO student_test VALUES (4, 74);
+INSERT INTO student_test VALUES (5, 89);
+INSERT INTO student_test VALUES (6, 56);
+INSERT INTO student_test VALUES (7, 93);
+
+SELECT DISTINCT marks_achieved as "Unique Marks"
+FROM student_test;
