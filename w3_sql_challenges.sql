@@ -417,9 +417,34 @@ INSERT INTO students (student_id, student_name, teacher_id) values ('1007', 'Phi
 
 SELECT student_name
 FROM students
-WHERE teacher_id != 602;
+WHERE teacher_id != 602 OR teacher_id IS NULL; -- Includes students without teacher_id
 
 -- Other input
 SELECT student_name
 FROM students
 WHERE teacher_id <> 602 OR teacher_id IS NULL;
+
+
+-- 16. From the following table, write a SQL query to find the order_id(s) that was executed by the maximum number of salespersons.
+-- If there are, more than one order_id(s) executed by the maximum number of salespersons find all the order_id(s). Return order_id.
+DROP TABLE  IF EXISTS salemast;
+CREATE TABLE salemast(salesperson_id int,  order_id int);
+INSERT INTO salemast(salesperson_id, order_id) VALUES ('5001', '1001');
+INSERT INTO salemast(salesperson_id, order_id) VALUES ('5002', '1002');
+INSERT INTO salemast(salesperson_id, order_id) VALUES ('5003', '1002');
+INSERT INTO salemast(salesperson_id, order_id) VALUES ('5004', '1002');
+INSERT INTO salemast(salesperson_id, order_id) VALUES ('5005', '1003');
+INSERT INTO salemast(salesperson_id, order_id) VALUES ('5006', '1004');
+INSERT INTO salemast(salesperson_id, order_id) VALUES ('5007', '1004');
+INSERT INTO salemast(salesperson_id, order_id) VALUES ('5008', '1004');
+SELECT order_id
+FROM salemast
+GROUP BY order_id
+HAVING COUNT(DISTINCT salesperson_id) = (
+    SELECT MAX(salesperson_count)
+    FROM (
+        SELECT COUNT(DISTINCT salesperson_id) AS salesperson_count
+        FROM salemast
+        GROUP BY order_id
+    ) AS counts
+); 
