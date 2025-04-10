@@ -400,3 +400,26 @@ INSERT INTO student_test VALUES (7, 93);
 
 SELECT DISTINCT marks_achieved as "Unique Marks"
 FROM student_test;
+
+
+-- 15. From the following table, write a SQL query to find those students who have referred by the teacher whose id not equal to 602. Return the student names.
+CREATE TABLE IF NOT EXISTS students (student_id INT,student_name VARCHAR(25),teacher_id INT);
+TRUNCATE TABLE students;
+
+CREATE TABLE IF NOT EXISTS students (student_id INT,student_name VARCHAR(25),teacher_id INT);
+INSERT INTO students (student_id, student_name, teacher_id) values ('1001', 'Alex', '601');
+INSERT INTO students (student_id, student_name, teacher_id) values ('1002', 'Jhon', NULL);
+INSERT INTO students (student_id, student_name, teacher_id) values ('1003', 'Peter', NULL);
+INSERT INTO students (student_id, student_name, teacher_id) values ('1004', 'Minto', '604');
+INSERT INTO students (student_id, student_name, teacher_id) values ('1005', 'Crage', NULL);
+INSERT INTO students (student_id, student_name, teacher_id) values ('1006', 'Chang', '601');
+INSERT INTO students (student_id, student_name, teacher_id) values ('1007', 'Philip', '602');
+
+SELECT student_name
+FROM students
+WHERE teacher_id != 602;
+
+-- Other input
+SELECT student_name
+FROM students
+WHERE teacher_id <> 602 OR teacher_id IS NULL;
