@@ -448,3 +448,16 @@ HAVING COUNT(DISTINCT salesperson_id) = (
         GROUP BY order_id
     ) AS counts
 ); 
+
+-- Practice query
+SELECT order_id
+FROM salemast
+GROUP BY order_id
+HAVING COUNT(DISTINCT salesperson_id) =
+(SELECT MAX(salesperson_id)
+  FROM 
+  (SELECT(DISTINCT salesperson_id) AS salesperson_count
+  FROM salemast 
+  GROUP BY order_id) 
+  AS counter
+  );
