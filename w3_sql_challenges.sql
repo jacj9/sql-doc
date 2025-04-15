@@ -484,3 +484,29 @@ INSERT INTO cities_test VALUES ('Manila	 		','Philippines	',	1780148,	43		);
 SELECT *
 FROM cities_test
 WHERE city_area > 50000 OR city_population > 15000000;
+
+
+-- 18. From the following table, write a SQL query to find those items, which have ordered 5 or more times. Return item name and number of orders.
+DROP IF TABLE EXISTS orders;
+CREATE TABLE orders(order_id int, customer_id int, item_desc varchar(255))
+  INSERT INTO orders VALUES(101,2109,'juice');
+INSERT INTO orders VALUES(102,2139,'chocolate');
+INSERT INTO orders VALUES(103,2120,'juice');
+INSERT INTO orders VALUES(104,2108,'cookies');
+INSERT INTO orders VALUES(105,2130,'juice');
+INSERT INTO orders VALUES(106,2103,'cake');
+INSERT INTO orders VALUES(107,2122,'cookies');
+INSERT INTO orders VALUES(108,2125,'cake');
+INSERT INTO orders VALUES(109,2139,'cake');
+INSERT INTO orders VALUES(110,2141,'cookies');
+INSERT INTO orders VALUES(111,2116,'cake');
+INSERT INTO orders VALUES(112,2128,'cake');
+INSERT INTO orders VALUES(113,2146,'chocolate');
+INSERT INTO orders VALUES(114,2119,'cookies');
+INSERT INTO orders VALUES(115,2142,'cake');
+SELECT * FROM  orders;
+
+SELECT item_desc, COUNT(order_id) AS 'Number of orders'
+FROM orders
+GROUP BY item_desc
+  HAVING COUNT(order_id) >= 5;
