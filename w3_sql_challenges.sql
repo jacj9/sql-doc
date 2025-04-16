@@ -488,7 +488,7 @@ WHERE city_area > 50000 OR city_population > 15000000;
 
 -- 18. From the following table, write a SQL query to find those items, which have ordered 5 or more times. Return item name and number of orders.
 DROP IF TABLE EXISTS orders;
-CREATE TABLE orders(order_id int, customer_id int, item_desc varchar(255))
+CREATE TABLE orders(order_id integer(5) NOT NULL, customer_id INTEGER(4) NOT NULL, item_desc varchar(30)) NOT NULL;
   INSERT INTO orders VALUES(101,2109,'juice');
 INSERT INTO orders VALUES(102,2139,'chocolate');
 INSERT INTO orders VALUES(103,2120,'juice');
@@ -510,3 +510,7 @@ SELECT item_desc, COUNT(order_id) AS 'Number of orders'
 FROM orders
 GROUP BY item_desc
   HAVING COUNT(order_id) >= 5;
+
+
+-- 19. From the following tables, write a SQL query to find the overall rate of execution of orders, which is the number of orders execution divided by the number of orders quote. Return rate_of_execution rounded to 2 decimals places.
+CREATE TABLE orders_issues(distributor_id INTEGER(3) NOT NULL, company_id INTEGER(3) NOT NULL, quotation_date DATE NOT NULL);
