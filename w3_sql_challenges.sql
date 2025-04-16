@@ -513,7 +513,31 @@ GROUP BY item_desc
 
 
 -- 19. From the following tables, write a SQL query to find the overall rate of execution of orders, which is the number of orders execution divided by the number of orders quote. Return rate_of_execution rounded to 2 decimals places.
-CREATE TABLE orders_issues(distributor_id INTEGER(3) NOT NULL, company_id INTEGER(3) NOT NULL, quotation_date DATE NOT NULL);
+CREATE TABLE orders_issued (distributor_id int, company_id int, quotation_date date);
+INSERT INTO orders_issued VALUES (101, 202, '2019-11-15');
+INSERT INTO orders_issued VALUES (101, 203, '2019-11-15');
+INSERT INTO orders_issued VALUES (101, 204, '2019-11-15');
+INSERT INTO orders_issued VALUES (102, 202, '2019-11-16');
+INSERT INTO orders_issued VALUES (102, 201, '2019-11-15');
+INSERT INTO orders_issued VALUES (103, 203, '2019-11-17');
+INSERT INTO orders_issued VALUES (103, 202, '2019-11-17');
+INSERT INTO orders_issued VALUES (104, 203, '2019-11-18');
+INSERT INTO orders_issued VALUES (104, 204, '2019-11-18');
 
-SELECT ROUND(COUNT(DISTINCT b.executed_date)/COUNT(DISTINCT a.quotation_date), 2) AS rate_of_execution
-FROM  orders_issued a JOIN orders_executed b ON a.company_id = b.orders_executed;
+CREATE TABLE orders_executed (orders_from int, executed_from int, executed_date date);
+INSERT INTO orders_executed VALUES (101, 202, '2019-11-17');
+INSERT INTO orders_executed VALUES (101, 203, '2019-11-17');
+INSERT INTO orders_executed VALUES (102, 202, '2019-11-17');
+INSERT INTO orders_executed VALUES (103, 203, '2019-11-18');
+INSERT INTO orders_executed VALUES (103, 202, '2019-11-19');
+INSERT INTO orders_executed VALUES (104, 203, '2019-11-20');
+
+SELECT
+ROUND(
+    IFNULL(
+    (SELECT COUNT(*) FROM (SELECT DISTINCT orders_from, executed_from FROM orders_executed) AS A)
+    /
+    (SELECT COUNT(*) FROM (SELECT DISTINCT distributor_id, company_id FROM orders_issued) AS B),
+    0)
+, 2) AS rate_of_execution;
+
