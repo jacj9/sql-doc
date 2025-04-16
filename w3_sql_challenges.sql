@@ -515,5 +515,5 @@ GROUP BY item_desc
 -- 19. From the following tables, write a SQL query to find the overall rate of execution of orders, which is the number of orders execution divided by the number of orders quote. Return rate_of_execution rounded to 2 decimals places.
 CREATE TABLE orders_issues(distributor_id INTEGER(3) NOT NULL, company_id INTEGER(3) NOT NULL, quotation_date DATE NOT NULL);
 
-SELECT ROUND((COUNT(DISTINCT b.executed_date)/COUNT(DISTINCT a.quotation_date)), 2) AS rate_of_execution
+SELECT ROUND(COUNT(DISTINCT b.executed_date)/COUNT(DISTINCT a.quotation_date), 2) AS rate_of_execution
 FROM  orders_issued a JOIN orders_executed b ON a.company_id = b.orders_executed;
