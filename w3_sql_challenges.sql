@@ -540,6 +540,13 @@ ROUND(
     /
     (SELECT COUNT(*) FROM (SELECT DISTINCT distributor_id, company_id FROM orders_issued) AS B), -- It selects distinct pairs of distributor_id and company_id from the orders_issued table. 
   -- Then it counts the total number of these unique pairs.
-    0) -- Handling Null values. If the denominator is zero of if there are no valid counts, it ensures the result is 0 instead of NULL
+    0) -- Handling Null values. If the denominator is zero or if there are no valid counts, it ensures the result is 0 instead of NULL
 , 2) AS rate_of_execution; -- Rounding the output. The final result is rounded to 2 decimal places.
 
+
+-- On my own
+SELECT
+ROUND(
+  IFNULL(
+  (SELECT COUNT(*) FROM(SELECT DISTINCT orders_from, executed_from FROM orders_executed) AS A) /
+  (SELECT COUNT(*) FROM (SELECT DISTINCT distributor_id, company_id FROM orders_issued) AS B), 0), 2) AS rate_of_execution;
