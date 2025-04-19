@@ -550,3 +550,13 @@ ROUND(
   IFNULL(
   (SELECT COUNT(*) FROM(SELECT DISTINCT orders_from, executed_from FROM orders_executed) AS A) /
   (SELECT COUNT(*) FROM (SELECT DISTINCT distributor_id, company_id FROM orders_issued) AS B), 0), 2) AS rate_of_execution;
+
+
+-- 20. From the following table write an SQL query to display the records with four or more rows with consecutive match_no's, and the crowd attended more than or equal to 50000 for each match. Return match_no, match_date and audience. Order the result by visit_date, descending.
+CREATE TABLE match_crowd(match_no INT NOT NULL, match_date DATE NOT NULL, audience INT NOT NULL);
+INSERT INTO match_crowd(
+
+SELECT match_no, match_date, audience
+FROM match_crowd
+WHERE audience >= 50000
+ORDER BY match_date DESC;
