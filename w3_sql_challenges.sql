@@ -553,10 +553,29 @@ ROUND(
 
 
 -- 20. From the following table write an SQL query to display the records with four or more rows with consecutive match_no's, and the crowd attended more than or equal to 50000 for each match. Return match_no, match_date and audience. Order the result by visit_date, descending.
-CREATE TABLE match_crowd(match_no INT NOT NULL, match_date DATE NOT NULL, audience INT NOT NULL);
-INSERT INTO match_crowd(
+CREATE TABLE match_crowd (match_no int, match_date date not null unique, audience int);
+INSERT INTO match_crowd VALUES ( 1,'2016-06-11',  75113 );
+INSERT INTO match_crowd VALUES ( 2,'2016-06-12',  62343 );
+INSERT INTO match_crowd VALUES ( 3,'2016-06-13',  43035 );
+INSERT INTO match_crowd VALUES ( 4,'2016-06-14',  55408 );
+INSERT INTO match_crowd VALUES ( 5,'2016-06-15',  38742 );
+INSERT INTO match_crowd VALUES ( 6,'2016-06-16',  63670 );
+INSERT INTO match_crowd VALUES ( 7,'2016-06-17',  73648 );
+INSERT INTO match_crowd VALUES ( 8,'2016-06-18',  52409 );
+INSERT INTO match_crowd VALUES ( 9,'2016-06-19',  67291 );
+INSERT INTO match_crowd VALUES (10,'2016-06-20',  49752 );
+INSERT INTO match_crowd VALUES (11,'2016-06-21',  28840 );
+INSERT INTO match_crowd VALUES (12,'2016-06-22',  32836 );
+INSERT INTO match_crowd VALUES (13,'2016-06-23',  44268 );
 
-SELECT match_no, match_date, audience
-FROM match_crowd
-WHERE audience >= 50000
-ORDER BY match_date DESC;
+SELECT DISTINCT m.match_no, m.match_date, m.audience
+FROM match_crowd m,
+(SELECT m1.match_no AS FROM_ID, m1.match_no+2 AS TO_ID
+FROM match_crowd m1, match_crowd m2, match_crowd m3
+WHERE m1.match_no+1 = m2.match_no
+AND m2.match_no+1 = m3.match_no
+AND m1.audience >= 50000
+AND m2.audience >= 50000
+AND m3.audience >= 50000) m2
+WHERE m.match_no BETWEEN m2.FROM_ID AND m2.TO_ID;
+
