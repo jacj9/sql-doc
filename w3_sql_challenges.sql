@@ -586,3 +586,4 @@ WHERE m.match_no BETWEEN m2.FROM_ID AND m2.TO_ID; -- The main query retrieves di
 -- Purpose: 
 -- The overall query identifies all matches in the match_crowd table that occur within the range of three consecutive matches, provided all those matches have an audience size of at least 50,000.
 
+-- Try on my own
