@@ -587,3 +587,13 @@ WHERE m.match_no BETWEEN m2.FROM_ID AND m2.TO_ID; -- The main query retrieves di
 -- The overall query identifies all matches in the match_crowd table that occur within the range of three consecutive matches, provided all those matches have an audience size of at least 50,000.
 
 -- Try on my own
+SELECT match_no, match_date, audience
+FROM match_crowd m, 
+(SELECT DISTINCT m1.match_no AS FROM_ID, m1.match_no+2 AS TO_ID
+  FROM match_crowd m1, match_crowd m2, match_crowd m3
+  WHERE m1.audience = m2.audience+1
+  AND m1.audience = m3.audience+2
+  AND m1.audience >= 50000
+  AND m2.audience >= 50000
+  AND m3.audience >= 50000) m2
+  WHERE m.match_no BETWEEN m2.FROM_ID AND m2.TO_ID;
