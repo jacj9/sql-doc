@@ -597,3 +597,36 @@ FROM match_crowd m,
   AND m2.audience >= 50000
   AND m3.audience >= 50000) m2
   WHERE m.match_no BETWEEN m2.FROM_ID AND m2.TO_ID;
+
+
+-- 21. From the following table write a SQL query to know the availability of the doctor for consecutive 2 or more days. Return visiting days.
+-- First try on my own
+SELECT visiting_date
+FROM dr_clinic d, (
+  SELECT d1.availability AS "AVAIL_A", d2.availability AS "AVAIL_B"
+  FROM dr_clinic d1, dr_clinic d2
+  WHERE d1.availability = d2.availability+1
+  AND d2.availability+1 = d1.availability+2) d2
+  WHERE d.availability BETWEEN d2.AVAIL_A AND d2.AVAIL_B;
+
+-- Given Solution
+CREATE TABLE dr_clinic (visiting_date date primary key, availability bool);
+
+INSERT INTO dr_clinic VALUES ('2016-06-11','1');
+INSERT INTO dr_clinic VALUES ('2016-06-12','1');
+INSERT INTO dr_clinic VALUES ('2016-06-13','0');
+INSERT INTO dr_clinic VALUES ('2016-06-14','1');
+INSERT INTO dr_clinic VALUES ('2016-06-15','0');
+INSERT INTO dr_clinic VALUES ('2016-06-16','0');
+INSERT INTO dr_clinic VALUES ('2016-06-17','1');
+INSERT INTO dr_clinic VALUES ('2016-06-18','1');
+INSERT INTO dr_clinic VALUES ('2016-06-19','1');
+INSERT INTO dr_clinic VALUES ('2016-06-20','1');	   
+INSERT INTO dr_clinic VALUES ('2016-06-21','1');
+
+-- (Explain further)
+SELECT DISTINCT a.visiting_date
+FROM dr_clinic a JOIN dr_clinic b
+  ON ABS(a.visiting_date - b.visiting_date) = 1
+  AND a.availability = true AND b.availability = true
+ORDER BY a.visiting_date;
