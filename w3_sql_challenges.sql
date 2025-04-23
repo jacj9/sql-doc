@@ -625,8 +625,10 @@ INSERT INTO dr_clinic VALUES ('2016-06-20','1');
 INSERT INTO dr_clinic VALUES ('2016-06-21','1');
 
 -- (Explain further)
-SELECT DISTINCT a.visiting_date
-FROM dr_clinic a JOIN dr_clinic b
-  ON ABS(a.visiting_date - b.visiting_date) = 1
-  AND a.availability = true AND b.availability = true
-ORDER BY a.visiting_date;
+SELECT DISTINCT a.visiting_date -- Retrieve only the unique value of visiting_date column
+FROM dr_clinic a JOIN dr_clinic b -- Joining the dr_clinic table with itself. We're giving the first instance the alias a and the second instance the alias b so we can refer them seperately. This self-join is crucial for comparing rows withing the same table.
+  ON ABS(a.visiting_date - b.visiting_date) = 1 -- Calculate the difference between the two visiting dates.
+  -- ABS(..) takes the absolute value of this difference.
+  -- = 1 checks if the absolute difference between the two visiting dates is exactly 1 day. This condition identifies pairs of records that are for consecutive days.
+  AND a.availability = true AND b.availability = true -- This adds another condition to the join. It ensures that both the record from the first instance a and the record from the second instance b have their availability column set to True. This means we are only considering in ascending order.
+ORDER BY a.visiting_date; -- Finally, this clause sorts the resulting distinct visiting_date values in ascending order.
