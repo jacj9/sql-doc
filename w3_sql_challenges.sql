@@ -632,3 +632,10 @@ FROM dr_clinic a JOIN dr_clinic b -- Joining the dr_clinic table with itself. We
   -- = 1 checks if the absolute difference between the two visiting dates is exactly 1 day. This condition identifies pairs of records that are for consecutive days.
   AND a.availability = true AND b.availability = true -- This adds another condition to the join. It ensures that both the record from the first instance a and the record from the second instance b have their availability column set to True. This means we are only considering in ascending order.
 ORDER BY a.visiting_date; -- Finally, this clause sorts the resulting distinct visiting_date values in ascending order.
+
+
+-- Trying on my own
+SELECT visiting_date
+FROM dr_clinic a JOIN dr_clinic b ON ABS(a.visiting_date - b.visiting_date) = 1
+AND a.availability = True AND b.availability = True
+ORDER BY a.visiting_date;
