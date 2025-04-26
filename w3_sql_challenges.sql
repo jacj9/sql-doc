@@ -639,3 +639,50 @@ SELECT visiting_date
 FROM dr_clinic a JOIN dr_clinic b ON ABS(a.visiting_date - b.visiting_date) = 1
 AND a.availability = True AND b.availability = True
 ORDER BY a.visiting_date;
+
+
+-- 22. From the following tables find those customers who did not make any order to the supplier 'DCX LTD'. Return customers name.
+
+-- First try on my own:
+SELECT a.customer_name
+FROM customers a JOIN orders b ON a.customer_id = b.customer_id
+JOIN supplier c JOIN b.supplier_id = c.supllier_id
+WHERE c.supplier_name <> 'DCX LTD';
+
+-- Answer key:
+DROP TABLE if exists customers;
+CREATE TABLE customers (customer_id int, customer_name varchar(255), customer_city varchar(255), avg_profit int);
+INSERT INTO customers  VALUES ('101', 'Liam','New York',25000);
+INSERT INTO customers  VALUES ('102', 'Josh','Atlanta',22000);
+INSERT INTO customers  VALUES ('103', 'Sean','New York',27000);
+INSERT INTO customers  VALUES ('104', 'Evan','Toronto',15000);
+INSERT INTO customers  VALUES ('105', 'Toby','Dallas',20000);
+
+CREATE TABLE supplier (supplier_id int, supplier_name varchar(255), supplier_city varchar(255));
+INSERT INTO supplier  VALUES ('501', 'ABC INC','Dallas');
+INSERT INTO supplier  VALUES ('502', 'DCX LTD','Atlanta');
+INSERT INTO supplier  VALUES ('503', 'PUC ENT','New York');
+INSERT INTO supplier  VALUES ('504', 'JCR INC','Toronto');
+	
+CREATE TABLE orders (order_id int, customer_id int, supplier_id int, order_date Date, order_amount int);
+INSERT INTO orders  VALUES (401, 103,501,'2012-03-08','4500');
+INSERT INTO orders  VALUES (402, 101,503,'2012-09-15','3650');
+INSERT INTO orders  VALUES (403, 102,503,'2012-06-27','4800');
+INSERT INTO orders  VALUES (404, 104,502,'2012-06-17','5600');
+INSERT INTO orders  VALUES (405, 104,504,'2012-06-22','6000');
+INSERT INTO orders  VALUES (406, 105,502,'2012-06-25','5600');
+
+
+SELECT * FROM customers;
+SELECT * FROM supplier;
+SELECT * FROM orders; 
+
+
+SELECT cus.customer_name
+FROM customers cus
+WHERE cus.customer_id 
+NOT IN (SELECT ord.customer_id
+FROM orders ord
+LEFT JOIN supplier sup 
+ON ord.supplier_id = sup.supplier_id
+WHERE sup.supplier_name = 'DCX LTD');
