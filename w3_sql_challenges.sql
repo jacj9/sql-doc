@@ -677,7 +677,7 @@ SELECT * FROM customers;
 SELECT * FROM supplier;
 SELECT * FROM orders; 
 
-
+-- Further explanation needed**
 SELECT cus.customer_name
 FROM customers cus
 WHERE cus.customer_id 
