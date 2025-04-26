@@ -686,3 +686,35 @@ FROM orders ord
 LEFT JOIN supplier sup 
 ON ord.supplier_id = sup.supplier_id
 WHERE sup.supplier_name = 'DCX LTD');
+
+
+-- 23. Table students contain marks of mathematics for several students in a class. It may same marks for more than one student.
+-- From the following table write a SQL table to find the highest unique marks a student achieved. Return the marks.
+-- First guess:
+SELECT COUNT(DISTINCT marks_achieved) AS marks
+FROM students;
+
+-- Official solution:
+CREATE TABLE students(student_id int, student_name varchar(255), marks_achieved int);
+
+INSERT INTO students VALUES(1, 'Alex',87);
+INSERT INTO students VALUES(2, 'Jhon',92);
+INSERT INTO students VALUES(3, 'Pain',83);
+INSERT INTO students VALUES(4, 'Danny',87);
+INSERT INTO students VALUES(5, 'Paul',92);
+INSERT INTO students VALUES(6, 'Rex',89);
+INSERT INTO students VALUES(7, 'Philip',87);
+INSERT INTO students VALUES(8, 'Josh',83);
+INSERT INTO students VALUES(9, 'Evan',92);
+INSERT INTO students VALUES(10, 'Larry',87);
+
+SELECT * FROM students;
+
+-- Further explanation needed***
+SELECT MAX(marks_achieved) as marks -- Calculates the maximum value among the unique marks_achieved values retrieved from the inner query.
+FROM (
+	SELECT marks_achieved
+	FROM students
+	GROUP BY marks_achieved -- Group rows in the students table by the marks_achieved column
+	HAVING COUNT(*) = 1 -- Filters out any duplicate values. Selecting only those marks_achieved values that appear exactly only once in the table
+) z;
