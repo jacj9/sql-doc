@@ -718,3 +718,12 @@ FROM (
 	GROUP BY marks_achieved -- Group rows in the students table by the marks_achieved column
 	HAVING COUNT(*) = 1 -- Filters out any duplicate values. Selecting only those marks_achieved values that appear exactly only once in the table
 ) z;
+
+-- On my own
+SELECT MAX(marks_achieved) as marks
+FROM (
+	SELECT marks_achived
+	FROM students
+	GROUP BY marks_achieved
+	HAVING COUNT(*) = 1
+	) z;
