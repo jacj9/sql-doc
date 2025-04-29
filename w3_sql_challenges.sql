@@ -720,10 +720,10 @@ FROM (
 ) z;
 
 -- On my own
-SELECT MAX(marks_achieved) as marks
+SELECT MAX(mark_achieved) as marks
 FROM (
-	SELECT marks_achived
+	SELECT mark_achieved
 	FROM students
-	GROUP BY marks_achieved
+	GROUP BY mark_achieved
 	HAVING COUNT(*) = 1
-	) z;
+)z;
