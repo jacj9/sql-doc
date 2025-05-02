@@ -766,12 +766,11 @@ ORDER BY bed_id ASC;
 
 -- Trying the query again
 SELECT bed_id AS original_bed_id, student_name,
-(CASE
-	WHEN MOD(bed_id, 2) != 0 AND counts != bed_id THEN bed_id + 1
-	WHEN MOD(bed_id, 2) !=0 AND counts = bed_id THEN bed_id
-	ELSE bed_id - 1
-) AS bed_id, student_name AS studend_new
-FROM bend_info,
+(CASE WHEN MOD(bed_id, 2) != 0 AND counts != bed_id THEN bed_id + 1
+	WHEN MOD(bed_id, 2) != 0 AND counts != 0 THEN bed_id
+	ELSE bed_id -1
+	END) AS bed_id, student_name AS student_new
+FROM bed_info,
 	(SELECT COUNT(*) AS counts
-	FROM bed_info) AS bed_counts
+	FROM bend_info) AS bed_counts
 ORDER BY bed_id ASC;
