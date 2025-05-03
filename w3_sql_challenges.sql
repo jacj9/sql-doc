@@ -731,6 +731,7 @@ FROM (
 
 -- 24. In a hostel, each room contains two beds. After every 6 months a student have to change their bed with his or her room-mate.
 -- From the following tables write a SQL query to find the new beds of the students in the hostel. Return original_bed_id, student_name, bed_id and student_new.
+
 -- First try on my own:
 SELECT a.bed_id AS original_bed_id, a.student_name, b.bed_id, bstudent_name AS student_new
 FROM bed_info a
@@ -751,9 +752,9 @@ INSERT INTO bed_info VALUES (110, 'Green');
 
 
 SELECT bed_id AS original_bed_id,student_name,
-    (CASE -- This is a CASE statement, which allows youto define different outcomes based on certain conditions. The result of this CASE statement will be a new value, and this new value is aliased as bed_id in the output, effectively overwriting the original bed_id for the result set.
+    (CASE -- This is a CASE statement, which allows you to define different outcomes based on certain conditions. The result of this CASE statement will be a new value, and this new value is aliased as bed_id in the output, effectively overwriting the original bed_id for the result set.
         WHEN MOD(bed_id, 2) != 0 AND counts != bed_id THEN bed_id + 1 -- MOD(bd_id, 2) calculates the remainder when bed_id is divided by 2. If the remainder is not 0, it means bed_id is an odd number.
-	-- counts != bed_id: This checks if the total count of rows in the bed_info table (which we'll see how counts is determined later), then the new bed_id will be the original bed_id will be the original bed_id plus 1.
+	-- counts != bed_id: This checks if the total count of rows in the bed_info table (which we'll see how counts is determined later), then the new bed_id will be the original bed_id plus 1.
         WHEN MOD(bed_id, 2) != 0 AND counts = bed_id THEN bed_id
         ELSE bed_id - 1 -- If neither of the WHEN conditions is met, it means the bed_id must be an even number(since the first WHEN condition checked for odd numbers). In this case, the new bed_id will be the original bed_id minus 1.
     END) AS bed_id,
@@ -764,10 +765,10 @@ FROM bed_info,
 ORDER BY bed_id ASC;
 
 
--- Trying the query again
+-- Trying to write the query again
 SELECT bed_id AS original_bed_id, student_name
 (CASE WHEN MOD(bed_id, 2) != 0 AND counts != bed_id THEN bed_id + 1
-	WHEN MOD(bed_id, 2) != 0 AND counts != bed_id THEN bed_id
+	WHEN MOD(bed_id, 2) != 0 AND counts = bed_id THEN bed_id
 	ELSE bed_id - 1) AS bed_id,
 student_name AS student_new
 FROM bed_info,
