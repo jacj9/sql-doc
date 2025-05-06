@@ -776,3 +776,27 @@ FROM bed_info,
 (SELECT COUNT(*) AS counts
 	FROM bed_info) AS bed_counts
 ORDER BY bed_id ASC;
+
+
+-- 25. From the following table, write a SQL query to find the first login date for each customer. Return customer id, login date.
+
+-- On my own: Querying for the selected columns
+SELECT customer_id, (SELECT DISTINCT login_date FROM bank_trans) AS first_login
+FROM bank_trans;
+
+-- Sample Solution:
+DROP TABLE IF EXISTS bank_trans;
+CREATE TABLE bank_trans(trans_id int, customer_id int, login_date date);
+INSERT INTO bank_trans VALUES (101, 3002, '2019-09-01');
+INSERT INTO bank_trans VALUES (101, 3002, '2019-08-01');
+INSERT INTO bank_trans VALUES (102, 3003, '2018-09-13');
+INSERT INTO bank_trans VALUES (102, 3002, '2018-07-24');
+INSERT INTO bank_trans VALUES (103, 3001, '2019-09-25');
+INSERT INTO bank_trans VALUES (102, 3004, '2017-09-05');
+SELECT * FROM bank_trans;
+
+SELECT customer_id, MIN(login_date) first_login
+FROM bank_trans
+GROUP BY customer_id;
+
+-- Try again
