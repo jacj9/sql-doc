@@ -800,3 +800,6 @@ FROM bank_trans
 GROUP BY customer_id;
 
 -- Try again
+SELECT customer_id, MIN(login_date) AS first_login_date
+FROM bank_trans
+GROUP BY customer_id;
