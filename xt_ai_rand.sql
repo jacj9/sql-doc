@@ -46,3 +46,77 @@ WHERE l1.id != l2.id
 AND l1.login_time BETWEEN DATE_SUB(l2.login_time, INTERVAL 1 HOUR) AND l2.login_time
 AND l1.country_code != l2.country_code
 """
+
+"""
+Scenario:
+
+You are a Behavioral Abuse Analyst at a social media company. You have access to a database with the following tables:
+
+users: Contains user information.
+
+user_id (INT, Primary Key)
+
+account_creation_date (DATE)
+
+country (VARCHAR)
+
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+content_reports: Contains reports of potentially abusive content.
+
+report_id (INT, Primary Key)
+
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+
+reporting_user_id (INT, Foreign Key referencing users.user_id)
+
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+
+report_date (DATE)
+
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+
+user_account_actions: Contains records of actions taken against user accounts.
+
+action_id (INT, Primary Key)
+
+user_id (INT, Foreign Key referencing users.user_id)
+
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+
+action_date (DATE)
+
+reason (VARCHAR)
+
+Exercise:
+
+Write SQL queries to answer the following questions:
+
+1. Identify users who have had more than 5 reports against their content in the last month:
+
+ - Show user_id, and the number of reports."""
+
+  
+"""
+2. Calculate the average time it takes to resolve a content report (i.e., go from 'Pending' to 'Reviewed', 'Actioned', or 'Dismissed'):
+
+- Show the report_type and the average resolution time in days.
+
+3. Find users who were suspended more than once for 'Hate Speech':
+
+- Show user_id and the number of suspensions.
+
+4. Analyze the trend of 'Spam' reports over the last quarter:
+
+- Show the date (grouped by week) and the number of 'Spam' reports.
+
+5. Identify accounts created in the last year which are currently suspended and have had at least one content report marked as 'Actioned':
+
+- Show the user_id, account_creation_date, and the number of 'Actioned' reports.
+
+Bonus Question:
+
+6.Write a query that identifies users who have both reported abusive content and had actions taken against their accounts. This could help identify potential patterns of retaliatory reporting or users who are both victims and perpetrators of abuse.
+
+- Show the user_id and the number of reports they made and the number of actions taken against their accounts.
+"""
