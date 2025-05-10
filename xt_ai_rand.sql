@@ -50,7 +50,7 @@ AND l1.country_code != l2.country_code
 """
 Scenario:
 
-You are a Behavioral Abuse Analyst at a social media company. You have access to a database with the following tables:
+You are an Analyst at a social media company. You have access to a database with the following tables:
 
 users: Contains user information.
 
@@ -94,26 +94,58 @@ Write SQL queries to answer the following questions:
 
 1. Identify users who have had more than 5 reports against their content in the last month:
 
- - Show user_id, and the number of reports."""
+ - Show user_id, and the number of reports.
+"""
 
+SELECT reporting_user_id, COUNT(*) AS number_of_reports
+  FROM content_reports
+  GROUP BY reporting_user_id
+  WHERE report_date BETWEEN DATE_SUB(report_date, INTERVAL 1 MONTH) AND report_date
+  HAVING COUNT(*) > 5;
   
 """
 2. Calculate the average time it takes to resolve a content report (i.e., go from 'Pending' to 'Reviewed', 'Actioned', or 'Dismissed'):
 
 - Show the report_type and the average resolution time in days.
+"""
+SELECT report_type, AVG(report_date)
+  FROM content_reports
+  
 
-3. Find users who were suspended more than once for 'Hate Speech':
+
+"""
+  3. Find users who were suspended more than once for 'Hate Speech':
 
 - Show user_id and the number of suspensions.
+"""
 
+SELECT user_id, COUNT(action_type) AS number_of_suspensions
+  FROM user_account_actions
+  WHERE action_type = 'Suspension';
+
+"""
 4. Analyze the trend of 'Spam' reports over the last quarter:
 
 - Show the date (grouped by week) and the number of 'Spam' reports.
+"""
 
+  SELECT report_date, report_type
+  FROM content_reports
+  WHERE report_type = 'Spam'
+  GROUP BY DATE_SUB(report_date 1 WEEK);
+
+"""
 5. Identify accounts created in the last year which are currently suspended and have had at least one content report marked as 'Actioned':
 
 - Show the user_id, account_creation_date, and the number of 'Actioned' reports.
+"""
 
+SELECT a.user_id, a.account_creation_date, COUNT(b.status) AS number_of_actioned_reports
+  FROM users a JOINS content_reports b ON a.user_id = b.reporting_user_id
+  WHERE a.account_status = 'Suspended' AND DATE_SUB(a.account_creation_date INTERVAL 1 YEAR) AND b.status = 'Actioned'
+  GROUP BY a.user_id
+  
+"""
 Bonus Question:
 
 6.Write a query that identifies users who have both reported abusive content and had actions taken against their accounts. This could help identify potential patterns of retaliatory reporting or users who are both victims and perpetrators of abuse.
