@@ -132,7 +132,7 @@ SELECT user_id, COUNT(action_type) AS number_of_suspensions
   SELECT report_date, report_type
   FROM content_reports
   WHERE report_type = 'Spam'
-  GROUP BY DATE_SUB(report_date 1 WEEK);
+  GROUP BY report_date;
 
 """
 5. Identify accounts created in the last year which are currently suspended and have had at least one content report marked as 'Actioned':
@@ -142,7 +142,9 @@ SELECT user_id, COUNT(action_type) AS number_of_suspensions
 
 SELECT a.user_id, a.account_creation_date, COUNT(b.status) AS number_of_actioned_reports
   FROM users a JOINS content_reports b ON a.user_id = b.reporting_user_id
-  WHERE a.account_status = 'Suspended' AND DATE_SUB(a.account_creation_date INTERVAL 1 YEAR) AND b.status = 'Actioned'
+  WHERE a.account_status = 'Suspended' 
+  AND a.account_creation_date >= NOW() - INTERVAL 1 YEAR 
+  AND b.status = 'Actioned'
   GROUP BY a.user_id
   
 """
