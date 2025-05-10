@@ -97,11 +97,11 @@ Write SQL queries to answer the following questions:
  - Show user_id, and the number of reports.
 """
 
-SELECT reporting_user_id, COUNT(*) AS number_of_reports
+SELECT reporting_user_id, COUNT(report_id) AS number_of_reports
   FROM content_reports
+  WHERE report_date >= NOW() - INTERVAL 1 MONTH 
   GROUP BY reporting_user_id
-  WHERE report_date BETWEEN DATE_SUB(report_date, INTERVAL 1 MONTH) AND report_date
-  HAVING COUNT(*) > 5;
+  HAVING number_of_reports > 5;
   
 """
 2. Calculate the average time it takes to resolve a content report (i.e., go from 'Pending' to 'Reviewed', 'Actioned', or 'Dismissed'):
