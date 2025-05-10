@@ -803,3 +803,39 @@ GROUP BY customer_id;
 SELECT customer_id, MIN(login_date) AS first_login_date
 FROM bank_trans
 GROUP BY customer_id;
+
+
+-- 26. From the following table, write a SQL query to find those salespersons whose commission is less than ten thousand. Return salesperson name, commission.
+
+-- First try
+SELECT salesman_name, commision_amt
+FROM salesmast, commision
+WHERE commision_amt < 10000;
+
+SELECT a.salesman_name, b.commision_amt
+FROM salesmast a
+JOIN commision b ON a.salesman_id = b.salesman_id
+WHERE b.commision_amt < 10000;
+
+-- Sample solution
+CREATE TABLE salemast(salesman_id int, salesman_name varchar(255), yearly_sale int);
+INSERT INTO salemast VALUES (101, 'Adam', 250000);
+INSERT INTO salemast VALUES (103, 'Mark', 100000);
+INSERT INTO salemast VALUES (104, 'Liam', 200000);
+INSERT INTO salemast VALUES (102, 'Evan', 150000);
+INSERT INTO salemast VALUES (105, 'Blake', 275000);
+INSERT INTO salemast VALUES (106, 'Noah', 50000);
+SELECT * FROM  salemast;
+CREATE TABLE commision (salesman_id int, commision_amt int);
+INSERT INTO commision VALUES (101, 10000);
+INSERT INTO commision VALUES (103, 4000);
+INSERT INTO commision VALUES (104, 8000);
+INSERT INTO commision VALUES (102, 6000);
+INSERT INTO commision VALUES (105, 11000);
+SELECT * FROM  commision;
+
+SELECT s.salesman_name,c.commision_amt 
+FROM salemast s LEFT JOIN
+commision c
+ON  s.salesman_id=c.salesman_id
+WHERE c.commision_amt<10000;
