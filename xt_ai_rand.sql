@@ -162,3 +162,9 @@ Bonus Question:
 
 - Show the user_id and the number of reports they made and the number of actions taken against their accounts.
 """
+SELECT a.user_id, COUNT(b.report_id) AS number_of_reports, COUNT(c.action_id) AS number_of_actions_taken
+FROM users a
+LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id
+LEFT JOIN user_account_actions c ON a.user_id = c.user_id
+WHERE b.reporting_user_id = c.user_id
+GROUP BY a.user_id;
