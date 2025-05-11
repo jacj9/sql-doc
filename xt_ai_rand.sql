@@ -137,10 +137,10 @@ SELECT a.user_id, COUNT(a.action_type) AS number_of_suspensions
 - Show the date (grouped by week) and the number of 'Spam' reports.
 """
 
-  SELECT report_date, report_type
+  SELECT report_date, COUNT(report_type) AS number_of_reports
   FROM content_reports
-  WHERE report_type = 'Spam'
-  GROUP BY report_date;
+  WHERE report_type = 'Spam' AND report_date >= NOW() - INTERVAL 3 MONTH
+  GROUP BY report_date = INTERVAL 1 WEEK;
 
 """
 5. Identify accounts created in the last year which are currently suspended and have had at least one content report marked as 'Actioned':
