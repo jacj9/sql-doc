@@ -108,7 +108,12 @@ SELECT reporting_user_id, COUNT(report_id) AS number_of_reports
 
 - Show the report_type and the average resolution time in days.
 """
-SELECT report_type
+SELECT report_type,
+  AVG(DATEDIFF(day, report_date, action_date)) AS avg_resolution_time_resolve
+  FROM content_report a
+  JOIN user_account_action b ON a.reporting_user_id = b.user_id
+  WHERE a.status IN ('Reviewed', 'Actioned', 'Dismissed')
+  GROUP BY report_type;
   
 
 
@@ -120,7 +125,7 @@ SELECT report_type
 
 SELECT a.user_id, COUNT(a.action_type) AS number_of_suspensions
   FROM user_account_actions a 
-  JOINS content_reports b ON a.user_id = b.reporting_user_id
+  JOIN content_reports b ON a.user_id = b.reporting_user_id
   WHERE a.action_type = 'Suspension'
   AND b.report_type = 'Hate Speech'
   GROUP BY a.user_id
@@ -144,7 +149,7 @@ SELECT a.user_id, COUNT(a.action_type) AS number_of_suspensions
 """
 
 SELECT a.user_id, a.account_creation_date, COUNT(b.status) AS number_of_actioned_reports
-  FROM users a JOINS content_reports b ON a.user_id = b.reporting_user_id
+  FROM users a JOIN content_reports b ON a.user_id = b.reporting_user_id
   WHERE a.account_status = 'Suspended' 
   AND a.account_creation_date >= NOW() - INTERVAL 1 YEAR 
   AND b.status = 'Actioned'
