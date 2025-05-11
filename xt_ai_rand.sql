@@ -70,6 +70,7 @@ content_id (INT, Foreign Key referencing a content table - not included here for
 reporting_user_id (INT, Foreign Key referencing users.user_id)
 report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
 report_date (DATE)
+report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 
 TABLE: user_account_actions: Contains records of actions taken against user accounts.
@@ -106,13 +107,19 @@ SELECT a.user_id, COUNT(b.report_id) AS number_of_reports
 
 - Show the report_type and the average resolution time in days.
 """
-SELECT report_type,
+-- First Attempt
+  SELECT report_type,
   AVG(DATEDIFF(day, report_date, action_date)) AS avg_resolution_time_resolve
   FROM content_report a
   JOIN user_account_action b ON a.reporting_user_id = b.user_id
   WHERE a.status IN ('Reviewed', 'Actioned', 'Dismissed')
   GROUP BY report_type;
   
+-- Second Attempt
+SELECT report_type, AVG(DATEDIFF(DAY, report_date, report_date_status)) AS avg_resolution_time
+  FROM content_reports
+  WHERE status IN ('Reviewed', 'Actioned', 'Dismissed')
+  GROUP BY report_type;
 
 
 """
