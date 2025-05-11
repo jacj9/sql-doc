@@ -52,40 +52,31 @@ Scenario:
 
 You are an Analyst at a social media company. You have access to a database with the following tables:
 
-users: Contains user information.
-
+TABLE: users: Contains user information.
 user_id (INT, Primary Key)
-
 account_creation_date (DATE)
-
 country (VARCHAR)
-
 account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
 
-content_reports: Contains reports of potentially abusive content.
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
 
+TABLE: content_reports: Contains reports of potentially abusive content.
 report_id (INT, Primary Key)
-
 content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
-
 reporting_user_id (INT, Foreign Key referencing users.user_id)
-
 report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
-
 report_date (DATE)
-
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 
-user_account_actions: Contains records of actions taken against user accounts.
-
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
 action_id (INT, Primary Key)
-
 user_id (INT, Foreign Key referencing users.user_id)
-
 action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
-
 action_date (DATE)
-
 reason (VARCHAR)
 
 Exercise:
@@ -93,15 +84,18 @@ Exercise:
 Write SQL queries to answer the following questions:
 
 1. Identify users who have had more than 5 reports against their content in the last month:
-
  - Show user_id, and the number of reports.
 """
-
+-- First Attempt
 SELECT reporting_user_id, COUNT(report_id) AS number_of_reports
   FROM content_reports
   WHERE report_date >= NOW() - INTERVAL 1 MONTH 
   GROUP BY reporting_user_id
   HAVING number_of_reports > 5;
+
+-- Second Attempt
+SELECT a.user_id, COUNT(b.report_id) AS number_of_reports
+  FROM users a JOIN content_reports b ON a.user_id = b.reporting_user_id
   
 """
 2. Calculate the average time it takes to resolve a content report (i.e., go from 'Pending' to 'Reviewed', 'Actioned', or 'Dismissed'):
