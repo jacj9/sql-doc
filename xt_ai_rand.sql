@@ -108,8 +108,7 @@ SELECT reporting_user_id, COUNT(report_id) AS number_of_reports
 
 - Show the report_type and the average resolution time in days.
 """
-SELECT report_type, AVG(DATEDIFF, report_date)
-  FROM content_reports
+SELECT report_type
   
 
 
