@@ -108,7 +108,7 @@ SELECT reporting_user_id, COUNT(report_id) AS number_of_reports
 
 - Show the report_type and the average resolution time in days.
 """
-SELECT report_type, AVG(report_date)
+SELECT report_type, AVG(DATEDIFF, report_date)
   FROM content_reports
   
 
@@ -119,9 +119,13 @@ SELECT report_type, AVG(report_date)
 - Show user_id and the number of suspensions.
 """
 
-SELECT user_id, COUNT(action_type) AS number_of_suspensions
-  FROM user_account_actions
-  WHERE action_type = 'Suspension';
+SELECT a.user_id, COUNT(a.action_type) AS number_of_suspensions
+  FROM user_account_actions a 
+  JOINS content_reports b ON a.user_id = b.reporting_user_id
+  WHERE a.action_type = 'Suspension'
+  AND b.report_type = 'Hate Speech'
+  GROUP BY a.user_id
+  HAVING number_suspensions > 1;
 
 """
 4. Analyze the trend of 'Spam' reports over the last quarter:
@@ -145,7 +149,7 @@ SELECT a.user_id, a.account_creation_date, COUNT(b.status) AS number_of_actioned
   WHERE a.account_status = 'Suspended' 
   AND a.account_creation_date >= NOW() - INTERVAL 1 YEAR 
   AND b.status = 'Actioned'
-  GROUP BY a.user_id
+  GROUP BY a.user_id;
   
 """
 Bonus Question:
