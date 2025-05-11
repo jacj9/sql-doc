@@ -96,6 +96,10 @@ SELECT reporting_user_id, COUNT(report_id) AS number_of_reports
 -- Second Attempt
 SELECT a.user_id, COUNT(b.report_id) AS number_of_reports
   FROM users a JOIN content_reports b ON a.user_id = b.reporting_user_id
+  JOIN content c ON b.content_id = c.content_id
+  WHERE report_date >= NOW() - INTERVAL 1 MONTH
+  GROUP BY a.user_id
+  HAVING number_of_reports > 5;
   
 """
 2. Calculate the average time it takes to resolve a content report (i.e., go from 'Pending' to 'Reviewed', 'Actioned', or 'Dismissed'):
