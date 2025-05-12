@@ -123,11 +123,10 @@ SELECT report_type, AVG(DATEDIFF(DAY, report_date, report_date_status)) AS avg_r
 
 
 """
-  3. Find users who were suspended more than once for 'Hate Speech':
-
+3. Find users who were suspended more than once for 'Hate Speech':
 - Show user_id and the number of suspensions.
 """
-
+-- First Attempt
 SELECT a.user_id, COUNT(a.action_type) AS number_of_suspensions
   FROM user_account_actions a 
   JOIN content_reports b ON a.user_id = b.reporting_user_id
@@ -136,9 +135,12 @@ SELECT a.user_id, COUNT(a.action_type) AS number_of_suspensions
   GROUP BY a.user_id
   HAVING number_suspensions > 1;
 
+-- Second Attempt
+
+
+
 """
 4. Analyze the trend of 'Spam' reports over the last quarter:
-
 - Show the date (grouped by week) and the number of 'Spam' reports.
 """
 
@@ -149,7 +151,6 @@ SELECT a.user_id, COUNT(a.action_type) AS number_of_suspensions
 
 """
 5. Identify accounts created in the last year which are currently suspended and have had at least one content report marked as 'Actioned':
-
 - Show the user_id, account_creation_date, and the number of 'Actioned' reports.
 """
 
