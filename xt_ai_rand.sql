@@ -136,18 +136,26 @@ SELECT a.user_id, COUNT(a.action_type) AS number_of_suspensions
   HAVING number_suspensions > 1;
 
 -- Second Attempt
-
+SELECT user_id, COUNT(action_type) AS number_of_suspensions
+  FROM user_account_actions
+  WHERE action_type = 'Suspension'
+  AND reason = 'Hate Speech'
+  GROUP BY user_id
+  HAVING number_of_suspensions > 1;
 
 
 """
 4. Analyze the trend of 'Spam' reports over the last quarter:
 - Show the date (grouped by week) and the number of 'Spam' reports.
 """
-
+-- First Attempt
   SELECT report_date, COUNT(report_type) AS number_of_reports
   FROM content_reports
   WHERE report_type = 'Spam' AND report_date >= NOW() - INTERVAL 3 MONTH
   GROUP BY report_date = INTERVAL 1 WEEK;
+
+-- Second Attempt
+
 
 """
 5. Identify accounts created in the last year which are currently suspended and have had at least one content report marked as 'Actioned':
