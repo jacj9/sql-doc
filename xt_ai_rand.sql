@@ -176,8 +176,8 @@ SELECT a.user_id, a.account_creation_date, COUNT(b.status) AS number_of_actioned
 -- Second Attempt
 SELECT a.user_id, a.account_creation_date, COUNT(c.content_id) AS number_of_reports
   FROM users a 
-  LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id
-  LEFT JOIN content c ON b.content_id = c.content_id
+  JOIN content_reports b ON a.user_id = b.reporting_user_id
+  JOIN content c ON b.content_id = c.content_id
   WHERE a.account_status = 'Suspended'
   AND a.account_creation_date >= NOW() - INTERVAL 1 YEAR
   AND b.status = 'Actioned'
@@ -190,9 +190,20 @@ Bonus Question:
 
 - Show the user_id and the number of reports they made and the number of actions taken against their accounts.
 """
+-- First Attempt
 SELECT a.user_id, COUNT(b.report_id) AS number_of_reports, COUNT(c.action_id) AS number_of_actions_taken
 FROM users a
 LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id
 LEFT JOIN user_account_actions c ON a.user_id = c.user_id
 WHERE b.reporting_user_id = c.user_id
+GROUP BY a.user_id;
+
+-- Second Attempt
+SELECT a.user_id, 
+COUNT(DISTINCT b.report_id) AS number_of_reports,
+COUNT(DISTINCT c.action_id) AS action_against
+FROM users a
+LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id
+LEFT JOIN user_account_actions c ON a.user_id = c.user_id
+WHERE b.report_type IS NOT NULL OR c.action_type IS NOT NULL
 GROUP BY a.user_id;
