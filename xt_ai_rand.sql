@@ -175,8 +175,9 @@ SELECT a.user_id, a.account_creation_date, COUNT(b.status) AS number_of_actioned
 
 -- Second Attempt
 SELECT a.user_id, a.account_creation_date, COUNT(c.content_id) AS number_of_reports
-  FROM users a JOIN content_reports b ON a.user_id = b.reporting_user_id
-  JOIN content c ON b.content_id = c.content_id
+  FROM users a 
+  LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id
+  LEFT JOIN content c ON b.content_id = c.content_id
   WHERE a.account_status = 'Suspended'
   AND a.account_creation_date >= NOW() - INTERVAL 1 YEAR
   AND b.status = 'Actioned'
