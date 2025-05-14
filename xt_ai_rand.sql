@@ -203,7 +203,7 @@ SELECT a.user_id,
 COUNT(DISTINCT b.report_id) AS number_of_reports,
 COUNT(DISTINCT c.action_id) AS action_against
 FROM users a
-LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id
-LEFT JOIN user_account_actions c ON a.user_id = c.user_id
-WHERE b.report_type IS NOT NULL OR c.action_type IS NOT NULL
+LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id -- Join to get reports made by the user
+LEFT JOIN user_account_actions c ON a.user_id = c.user_id -- Join to get actions agaiinst the user
+WHERE b.report_id IS NOT NULL OR c.action_type IS NOT NULL 
 GROUP BY a.user_id;
