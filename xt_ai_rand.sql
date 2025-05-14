@@ -155,10 +155,11 @@ SELECT user_id, COUNT(action_type) AS number_of_suspensions
   GROUP BY report_date = INTERVAL 1 WEEK;
 
 -- Second Attempt
-SELECT DATE_TRUNC('week', report_date) AS week_start_date, COUNT(*) AS number_of_reports
+SELECT DATE_TRUNC('week', report_date) AS week_start_date, -- Show the date (grouped by week)
+  COUNT(report_type) AS number_of_spam_reports
   FROM content_reports
   WHERE report_type = 'Spam' AND report_date >= NOW() - INTERVAL 3 MONTH
-  GROUP BY DATE_TRUNC('week', report_date) -- This is the standard way to group by week
+  GROUP BY DATE_TRUNC('week', report_date) -- To group the reports by the beginning of the week. This is the standard way to group by week
   ORDER BY week_start_date;
 
 """
