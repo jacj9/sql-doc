@@ -254,3 +254,7 @@ FROM users a
 WHERE b.report_date >= NOW() - INTERVAL 1 MONTH
 GROUP BY a.user_id
 HAVING number_reports > 5;
+
+"""
+Write a SQL query to find users who were suspended more than once for 'Hate Speech'. Show the user_id and the number of suspensions.
+"""
