@@ -208,3 +208,47 @@ LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id -- Join to get re
 LEFT JOIN user_account_actions c ON a.user_id = c.user_id -- Join to get actions agaiinst the user
 WHERE b.report_id IS NOT NULL OR c.action_type IS NOT NULL 
 GROUP BY a.user_id;
+
+
+"""
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR)
+"""
+
+"""
+Here's one exercise for you:
+Exercise:
+Based on the database schema provided, write a SQL query to identify users who have had more than 5 reports against their content in the last month. 
+Show the user_id and the number of reports.
+"""
+-- First Attempt
+SELECT reporting_user_id, COUNT(report_id) AS number_reports
+FROM content_reports
+WHERE report_date >= NOW() - INTERVAL 1 MONTH
+GROUP BY reporting_user_id
+HAVING number_reports > 5;
