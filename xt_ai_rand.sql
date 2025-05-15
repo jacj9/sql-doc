@@ -247,8 +247,10 @@ Based on the database schema provided, write a SQL query to identify users who h
 Show the user_id and the number of reports.
 """
 -- First Attempt
-SELECT reporting_user_id, COUNT(report_id) AS number_reports
-FROM content_reports
-WHERE report_date >= NOW() - INTERVAL 1 MONTH
-GROUP BY reporting_user_id
+SELECT a.user_id, COUNT(b.report_id) AS number_reports
+FROM users a
+  JOIN content b ON a.user_id = b.user_id
+  JOIN content_reports c ON b.content_id = c.content_id
+WHERE b.report_date >= NOW() - INTERVAL 1 MONTH
+GROUP BY a.user_id
 HAVING number_reports > 5;
