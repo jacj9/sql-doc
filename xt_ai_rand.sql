@@ -258,3 +258,11 @@ HAVING number_reports > 5;
 """
 Write a SQL query to find users who were suspended more than once for 'Hate Speech'. Show the user_id and the number of suspensions.
 """
+SELECT a.user_id, COUNT(c.action_type) AS num_susp
+FROM users a 
+JOIN content_reports b ON a.user_id = b.reporting_user_id
+JOIN user_account_action c ON a.user_id = c.user_id
+WHERE b.report_type = 'Hate Speech'
+AND c.action_type = 'Suspension'
+GROUP BY a.user_id
+HAVING  num_susp > 1;
