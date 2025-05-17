@@ -282,8 +282,14 @@ Write a SQL query to analyze the trend of 'Spam' reports over the last quarter.
 Show the date (grouped by week) and the number of 'Spam' reports for each week.
 """
 -- First Attempt
-SELECT DATE_TRUNC('week', report_date), COUNT(report_type) AS rep_spam_week
+SELECT DATE_TRUNC('week', report_date) AS week_start date, COUNT(report_type) AS rep_spam_week
 FROM content_reports
 WHERE report_type = 'Spam'
 AND report_date >= NOW() - INTERVAL 3 MONTH
-GROUP BY DATE_TRUNC('week', report_date);
+GROUP BY week_start_date
+ORDER BY week_start_date;
+
+
+"""
+Write a SQL query to identify accounts created in the last year which are currently suspended and have had at least one content report marked as 'Actioned'. Show the user_id, account_creation_date, and the number of 'Actioned' reports for each user.
+"""
