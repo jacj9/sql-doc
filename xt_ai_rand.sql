@@ -281,3 +281,9 @@ HAVING num_sus >1;
 Write a SQL query to analyze the trend of 'Spam' reports over the last quarter. 
 Show the date (grouped by week) and the number of 'Spam' reports for each week.
 """
+-- First Attempt
+SELECT DATE_TRUNC('week', report_date), COUNT(report_type) AS rep_spam_week
+FROM content_reports
+WHERE report_type = 'Spam'
+AND report_date >= NOW() - INTERVAL 3 MONTH
+GROUP BY DATE_TRUNC('week', report_date);
