@@ -402,3 +402,8 @@ LEFT JOIN
 WHERE cr.report_id IS NOT NULL AND uaa.action_id IS NOT NULL
 GROUP BY
     u.user_id;
+
+
+"""
+Write a SQL query to identify the top 5 countries with the highest number of users who have had actions taken against their accounts. Show the country and the number of users with actions taken.
+"""
