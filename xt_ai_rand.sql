@@ -325,3 +325,23 @@ WHERE a.account_status = 'Suspended'
   AND a.account_creation_date >= NOW() - INTERVAL 1 YEAR
 GROUP BY a.user_id
   HAVING num_report > 1;
+
+-- Sample Solution
+SELECT
+    a.user_id,
+    a.account_creation_date,
+    COUNT(c.status) AS num_reports
+FROM
+    users a
+JOIN
+    content b ON a.user_id = b.user_id
+JOIN
+    content_reports c ON b.content_id = c.content_id
+WHERE
+    a.account_status = 'Suspended'
+    AND c.status = 'Actioned'
+    AND a.account_creation_date >= NOW() - INTERVAL 1 YEAR
+GROUP BY
+    a.user_id, a.account_creation_date -- Include account_creation_date in GROUP BY
+HAVING
+    num_reports >= 1; -- Changed to >= 1 to include those with 1 or more Actioned reports
