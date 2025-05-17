@@ -379,3 +379,26 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+-- First Attempt
+SELECT a.user_id, COUNT(b.report_id) AS num_rep, COUNT(c.action_id) AS num_act
+FROM users a 
+LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id
+LEFT JOIN user_account_actions c ON a.user_id = c.user_id
+WHERE b.report_type IS NOT NULL 
+  OR c.action_type IS NOT NULL
+GROUP BY a.user_id;
+
+-- Sample solution
+SELECT
+    u.user_id,
+    COUNT(DISTINCT cr.report_id) AS reports_made,
+    COUNT(DISTINCT uaa.action_id) AS actions_taken
+FROM
+    users u
+LEFT JOIN
+    content_reports cr ON u.user_id = cr.reporting_user_id
+LEFT JOIN
+    user_account_actions uaa ON u.user_id = uaa.user_id
+WHERE cr.report_id IS NOT NULL AND uaa.action_id IS NOT NULL
+GROUP BY
+    u.user_id;
