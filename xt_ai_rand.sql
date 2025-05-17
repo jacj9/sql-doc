@@ -291,5 +291,37 @@ ORDER BY week_start_date;
 
 
 """
-Write a SQL query to identify accounts created in the last year which are currently suspended and have had at least one content report marked as 'Actioned'. Show the user_id, account_creation_date, and the number of 'Actioned' reports for each user.
+Write a SQL query to identify accounts created in the last year which are currently suspended and have had at least one content report marked as 'Actioned'. 
+Show the user_id, account_creation_date, and the number of 'Actioned' reports for each user.
+
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+-- First Attempt
+SELECT user_id, account_creation_date, COUNT(c.status) AS num_report
+FROM users a
+  JOIN content b ON a.user_id = b.user_id
+  JOIN content_reports c ON b.content_id = c.content_id
+WHERE a.account_status = 'Suspended'
+  AND c.status = 'Actioned'
+  AND a.account_creation_date >= NOW() - INTERVAL 1 YEAR
+GROUP BY a.user_id
+  HAVING num_report > 1;
