@@ -237,7 +237,7 @@ action_id (INT, Primary Key)
 user_id (INT, Foreign Key referencing users.user_id)
 action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
-reason (VARCHAR)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
 
 """
@@ -256,7 +256,8 @@ GROUP BY a.user_id
 HAVING number_reports > 5;
 
 """
-Write a SQL query to find users who were suspended more than once for 'Hate Speech'. Show the user_id and the number of suspensions.
+Write a SQL query to find users who were suspended more than once for 'Hate Speech'. 
+  Show the user_id and the number of suspensions.
 """
 -- First attempt
 SELECT a.user_id, COUNT(c.action_type) AS num_susp
@@ -267,3 +268,16 @@ WHERE b.report_type = 'Hate Speech'
 AND c.action_type = 'Suspension'
 GROUP BY a.user_id
 HAVING  num_susp > 1;
+
+-- Second attempt
+SELECT user_id, COUNT(action_type) AS num_sus
+FROM user_account_action
+WHERE action_type = 'Suspension' AND reason = 'Hate Speech'
+GROUP BY user_id
+HAVING num_sus >1;
+
+
+"""
+Write a SQL query to analyze the trend of 'Spam' reports over the last quarter. 
+Show the date (grouped by week) and the number of 'Spam' reports for each week.
+"""
