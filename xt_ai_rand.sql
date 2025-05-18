@@ -405,5 +405,19 @@ GROUP BY
 
 
 """
-Write a SQL query to identify the top 5 countries with the highest number of users who have had actions taken against their accounts. Show the country and the number of users with actions taken.
+Write a SQL query to identify the top 5 countries with the highest number of users who have had actions taken against their accounts. 
+Show the country and the number of users with actions taken.
+
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
