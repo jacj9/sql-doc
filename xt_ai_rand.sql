@@ -429,3 +429,22 @@ WHERE b.action_id IS NOT NULL
 GROUP BY a.country
 ORDER BY num_acc_act DESC
 LIMIT 5;
+
+
+"""
+Write a SQL query to find the top 3 most common reasons for user account suspensions. 
+Show the reason and the number of suspensions for each reason.
+
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
