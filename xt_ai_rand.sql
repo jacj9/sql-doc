@@ -366,7 +366,7 @@ creation_date (DATE)
 TABLE: content_reports: Contains reports of potentially abusive content.
 report_id (INT, Primary Key)
 content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
-reporting_user_id (INT, Foreign Key referencing users.user_id)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
 report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
 report_date (DATE)
 report_status_date (DATE)
@@ -452,11 +452,32 @@ LIMIT 3;
 
 """
 Write a SQL query to find the weekly number of new user account creations for the past quarter. 
-  Show the week starting date and the number of new accounts created in that week.
+Show the week starting date and the number of new accounts created in that week.
 
- TABLE: users: Contains user information.
+TABLE: users: Contains user information.
 user_id (INT, Primary Key)
 account_creation_date (DATE)
 country (VARCHAR)
 account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+"""
+SELECT DATE_TRUNC('week', account_creation_date) AS week_start_date, COUNT(user_id) AS new_acc
+FROM users
+WHERE account_creation_date >= NOW() - INTERVAL 3 MONTH
+GROUP BY week_start_date
+ORDER BY new_acc DESC;
+
+
+"""
+Write a SQL query to identify the users who have the highest number of reports made by them. 
+Show the user ID and the number of reports made. 
+Limit the results to the top 10 users.
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
