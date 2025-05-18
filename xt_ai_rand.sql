@@ -453,4 +453,10 @@ LIMIT 3;
 """
 Write a SQL query to find the weekly number of new user account creations for the past quarter. 
   Show the week starting date and the number of new accounts created in that week.
+
+ TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
 """
