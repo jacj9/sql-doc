@@ -435,16 +435,22 @@ LIMIT 5;
 Write a SQL query to find the top 3 most common reasons for user account suspensions. 
 Show the reason and the number of suspensions for each reason.
 
-TABLE: users: Contains user information.
-user_id (INT, Primary Key)
-account_creation_date (DATE)
-country (VARCHAR)
-account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
-
 TABLE: user_account_actions: Contains records of actions taken against user accounts.
 action_id (INT, Primary Key)
 user_id (INT, Foreign Key referencing users.user_id)
 action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
+SELECT reason, COUNT(action_type) AS num_susp
+FROM user_account_actions
+WHERE action_type = 'Suspension'
+GROUP BY reason
+ORDER BY num_susp DESC
+LIMIT 3;
+
+
+"""
+Write a SQL query to find the weekly number of new user account creations for the past quarter. 
+  Show the week starting date and the number of new accounts created in that week.
 """
