@@ -421,3 +421,11 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+-- First Attempt
+SELECT a.country, COUNT(DISTINCT b.user_id) AS num_acc_act
+FROM users a
+LEFT JOIN user_account_actions b ON a.user_id = b.user_id
+WHERE b.action_id IS NOT NULL
+GROUP BY a.country
+ORDER BY num_acc_act DESC
+LIMIT 5;
