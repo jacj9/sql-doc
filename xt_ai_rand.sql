@@ -481,3 +481,8 @@ report_date (DATE)
 report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT reporting_user_id, COUNT(report_id) AS num_rep
+FROM content_reports
+GROUP BY reporting_user_id
+ORDER BY num_rep DESC
+LIMIT 10;
