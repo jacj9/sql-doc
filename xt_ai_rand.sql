@@ -486,3 +486,23 @@ FROM content_reports
 GROUP BY reporting_user_id
 ORDER BY num_rep DESC
 LIMIT 10;
+
+
+"""
+Write a SQL query to find the content that has received the most reports. Show the content_id and the number of reports for each content item, and limit the results to the top 10.
+
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
