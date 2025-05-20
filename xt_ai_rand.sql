@@ -506,3 +506,10 @@ report_date (DATE)
 report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+
+SELECT a.content_id, COUNT(report_id) AS num_repo
+FROM content a 
+JOIN content_reports b ON a.cotent_id = b.content_id
+GROUP BY a.content_id
+ORDER BY num_repo ASC
+LIMIT 10;
