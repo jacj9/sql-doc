@@ -509,7 +509,13 @@ status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 
 SELECT a.content_id, COUNT(report_id) AS num_repo
 FROM content a 
-JOIN content_reports b ON a.cotent_id = b.content_id
+JOIN content_reports b ON a.content_id = b.content_id
 GROUP BY a.content_id
-ORDER BY num_repo ASC
+ORDER BY num_repo DESC
 LIMIT 10;
+
+
+"""
+Write a SQL query to identify users who have been reported for 'Harassment' at least once, but have not yet had any account actions (e.g., Suspension, Warning, Account Closure) taken against them. 
+Show the user_id, account_creation_date, and the number of 'Harassment' reports they've received.
+"""
