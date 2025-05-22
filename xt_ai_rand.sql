@@ -552,8 +552,35 @@ SELECT a.user_id, a.account_creation_date, COUNT(c.report_type) AS num_report
 FROM users a 
 JOIN content b ON a.user_id = b.user_id
 JOIN content_reports c ON b.content_id = c.content_id
-JOIN user_account_actions d ON a.user_id = d.user_id
-WHERE c.report_type = 'Harassment'
-GROUP BY a.user_id
-ORDER BY a.user_id, a.account_creation_idate
-HAVING num_report >=1 AND COUNT(d.action_type) = 0;
+LEFT JOIN user_account_actions d ON a.user_id = d.user_id
+WHERE c.report_type = 'Harassment' AND d.action_type IS NULL
+GROUP BY a.user_id, a.account_creation_date
+ORDER BY a.user_id, a.account_creation_date
+HAVING num_report >=1;
+
+
+"""
+Write a SQL query to identify the top 5 users who have made the most reports of 'Hate Speech'. 
+Show their user_id and the total number of 'Hate Speech' reports they have submitted.
+
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
