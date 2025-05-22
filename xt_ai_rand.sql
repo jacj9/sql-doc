@@ -547,3 +547,13 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+
+SELECT a.user_id, a.account_creation_date, COUNT(c.report_type) AS num_report
+FROM users a 
+JOIN content b ON a.user_id = b.user_id
+JOIN content_reports c ON b.content_id = c.content_id
+JOIN user_account_actions d ON a.user_id = d.user_id
+WHERE c.report_type = 'Harassment'
+GROUP BY a.user_id
+ORDER BY a.user_id, a.account_creation_idate
+HAVING num_report >=1 AND COUNT(d.action_type) = 0;
