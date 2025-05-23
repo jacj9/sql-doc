@@ -584,3 +584,11 @@ report_date (DATE)
 report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT a.user_id, COUNT(c.report_type) AS num_rep
+FROM users a
+JOIN content b ON a.user_id = b.user_id
+JOIN content_reports c ON b.content_id = c.content_id
+WHERE c.report_type = 'Hate Speech'
+GROUP by a.user_id
+ORDER BY num_rep
+LIMIT 5 DESC;
