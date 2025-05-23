@@ -587,8 +587,15 @@ status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 SELECT a.user_id, COUNT(c.report_type) AS num_rep
 FROM users a
 JOIN content b ON a.user_id = b.user_id
-JOIN content_reports c ON b.content_id = c.content_id
+JOIN content_reports c ON a.user_id = c.reporting_user_id
 WHERE c.report_type = 'Hate Speech'
 GROUP by a.user_id
-ORDER BY num_rep
-LIMIT 5 DESC;
+ORDER BY num_rep DESC
+LIMIT 5;
+
+
+"""
+Write a SQL query to calculate the percentage of users who have had their account status changed to 'Suspended' within 30 days of their account creation.
+
+Show the total number of users created in the last year, and the percentage of those users who were suspended within 30 days of creation.
+"""
