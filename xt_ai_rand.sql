@@ -596,7 +596,6 @@ LIMIT 5;
 
 """
 Write a SQL query to calculate the percentage of users who have had their account status changed to 'Suspended' within 30 days of their account creation.
-
 Show the total number of users created in the last year, and the percentage of those users who were suspended within 30 days of creation.
 
 TABLE: users: Contains user information.
@@ -628,3 +627,10 @@ action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
 
+SELECT COUNT(user_id) AS num_year, (SELECT COUNT(user_id) AS acc_susp 
+                                      FROM users 
+                                        WHERE account_creation_date >= NOW() - INTERVAL 30 DAY
+                                          GROUP BY acc_sus) AS pct_acc_sup
+FROM users
+WHERE account_creation_date >= NOW() - INTERVAL 1 YEAR AND account_status = 'Suspended'
+GROUP BY num_year;
