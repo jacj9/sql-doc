@@ -627,10 +627,11 @@ action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
 
-SELECT COUNT(user_id) AS num_year, (SELECT COUNT(user_id) AS acc_susp 
+SELECT COUNT(user_id) AS num_year, ((SELECT COUNT(user_id) AS acc_susp 
                                       FROM users 
                                         WHERE account_creation_date >= NOW() - INTERVAL 30 DAY
-                                          GROUP BY acc_sus) AS pct_acc_sup
+                                        AND account_status = 'Suspended'
+                                          GROUP BY acc_sus)/100)*10 AS pct_acc_sup
 FROM users
-WHERE account_creation_date >= NOW() - INTERVAL 1 YEAR AND account_status = 'Suspended'
+WHERE account_creation_date >= NOW() - INTERVAL 1 YEAR 
 GROUP BY num_year;
