@@ -636,7 +636,7 @@ FROM users
 WHERE account_creation_date >= NOW() - INTERVAL 1 YEAR 
 GROUP BY num_year;
 
--- Corrected query
+-- Corrected query **Sample Solution** ----
 SELECT
     -- Total users created in the last year
     (SELECT COUNT(user_id) FROM users WHERE account_creation_date >= NOW() - INTERVAL 1 YEAR) AS total_users_last_year,
