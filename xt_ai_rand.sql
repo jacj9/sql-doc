@@ -639,18 +639,20 @@ GROUP BY num_year;
 
 -- ***Corrected query **Sample Solution** ----
 SELECT
+  -- Total users created in the last year
     (SELECT COUNT(user_id) FROM users WHERE account_creation_date >= NOW() - INTERVAL 1 YEAR) AS total_users_last_year,
-    (CAST(COUNT(DISTINCT u.user_id) AS DECIMAL) * 100.0 /
+    -- Percentage calculation
+  (CAST(COUNT(DISTINCT u.user_id) AS DECIMAL) * 100.0 /
      (SELECT COUNT(user_id) FROM users WHERE account_creation_date >= NOW() - INTERVAL 1 YEAR)) AS percentage_suspended
 FROM
     users u
 JOIN
     user_account_actions uaa ON u.user_id = uaa.user_id
 WHERE
-    u.account_creation_date >= NOW() - INTERVAL 1 YEAR
-    AND uaa.action_type = 'Suspension'
-    AND uaa.action_date <= u.account_creation_date + INTERVAL 30 DAY
-    AND uaa.action_date >= u.account_creation_date;
+    u.account_creation_date >= NOW() - INTERVAL 1 YEAR -- Account created in the last year
+    AND uaa.action_type = 'Suspension' -- Account was a suspension
+    AND uaa.action_date <= u.account_creation_date + INTERVAL 30 DAY -- Suspension within the first 30 days after creation
+    AND uaa.action_date >= u.account_creation_date; -- Ensure that the action date is not before acccount creation date
 
 
 -- Another attempts
