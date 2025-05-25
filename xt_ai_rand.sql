@@ -657,3 +657,23 @@ WHERE
     AND uaa.action_type = 'Suspension' -- Action was a suspension
     AND uaa.action_date <= u.account_creation_date + INTERVAL 30 DAY -- Suspension within 30 days of creation
     AND uaa.action_date >= u.account_creation_date; -- Ensure action is not before creation
+
+
+-- Another attempts
+"""
+Write a SQL query to calculate the percentage of users who have had their account status changed to 'Suspended' within 30 days of their account creation.
+Show the total number of users created in the last year, and the percentage of those users who were suspended within 30 days of creation.
+
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
