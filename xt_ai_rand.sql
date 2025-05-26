@@ -673,3 +673,10 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT () AS acc_created_year, 
+      () AS prct_susp
+FROM users a 
+JOIN user_account_actions b ON a.user_id = b.user_id
+WHERE b.action_type = 'Suspension'
+AND b.action_date <= a.account_creation_date + INTERVAL 30 DAY
+AND b.action_date >= a.account_creation_date;
