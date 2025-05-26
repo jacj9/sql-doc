@@ -690,12 +690,6 @@ Write a SQL query to identify users who received a 'Warning' action, and then la
 
 Show the user_id, the action_date of their initial 'Warning', and the action_date of their subsequent 'Suspension' or 'Account Closure'. Ensure that the severe action occurred after the warning.
 
-TABLE: users: Contains user information.
-user_id (INT, Primary Key)
-account_creation_date (DATE)
-country (VARCHAR)
-account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
-
 TABLE: user_account_actions: Contains records of actions taken against user accounts.
 action_id (INT, Primary Key)
 user_id (INT, Foreign Key referencing users.user_id)
@@ -703,3 +697,6 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT user_id, action_date, (SELECT action_date FROM user_account_actions ) AS after_warning
+FROM user_account_ations
+WHERE ('Warning') < ('Suspension' OR 'Account Closure')
