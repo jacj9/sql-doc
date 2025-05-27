@@ -740,3 +740,31 @@ JOIN user_account_actions b ON a.user_id = b.user_id
 WHERE a.action_type = 'Warning'
 AND b.action_type IN ('Suspension', 'Account Closure')
 AND a.action_date < b.action_date;
+
+
+"""
+Write a SQL query to identify users who reported content that was later determined to be not abusive (i.e., the content_report's status was set to 'Dismissed').
+
+Show the user_id of the reporting user and the report_id of the dismissed report.
+
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
