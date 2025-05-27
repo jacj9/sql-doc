@@ -697,6 +697,7 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+-- First attempt
 SELECT user_id, 
   action_date, 
   (SELECT action_date FROM user_account_actions WHERE action_type = 'Warning' ) AS after_warning
@@ -705,3 +706,31 @@ WHERE after_warning <
   (SELECT action_date 
   FROM user_account_actions 
   WHERE action_type IN ('Suspension', 'Account Closure'));
+
+-- Sample Solution
+SELECT DISTINCT
+    w.user_id,
+    w.action_date AS warning_date,
+    sa.action_date AS severe_action_date
+FROM
+    user_account_actions w -- Alias for the 'Warning' actions
+JOIN
+    user_account_actions sa ON w.user_id = sa.user_id -- Join to find severe actions for the *same* user
+WHERE
+    w.action_type = 'Warning' -- Filter for the initial warning
+    AND sa.action_type IN ('Suspension', 'Account Closure') -- Filter for the subsequent severe action
+    AND sa.action_date > w.action_date; -- Ensure the severe action happened *after* the warning
+
+-- Another attempt
+"""
+Write a SQL query to identify users who received a 'Warning' action, and then later received a more severe action ('Suspension' or 'Account Closure').
+
+Show the user_id, the action_date of their initial 'Warning', and the action_date of their subsequent 'Suspension' or 'Account Closure'. Ensure that the severe action occurred after the warning.
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
