@@ -734,3 +734,9 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT a.user_id, a.action_date, b.action_date
+FROM user_account_actions a
+JOIN user_account_actions b ON a.user_id = b.user_id
+WHERE a.action_type = 'Warning'
+AND b.action_type IN ('Suspension', 'Account Closure')
+AND a.action_date < b.action_date;
