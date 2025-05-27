@@ -697,6 +697,11 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
-SELECT user_id, action_date, (SELECT action_date FROM user_account_actions ) AS after_warning
+SELECT user_id, 
+  action_date, 
+  (SELECT action_date FROM user_account_actions WHERE action_type = 'Warning' ) AS after_warning
 FROM user_account_ations
-WHERE (action_type = 'Warning') < (SELECT action_date FROM user_accoutn_actions WHERE action_type IN ('Suspension', 'Account Closure'))
+WHERE after_warning < 
+  (SELECT action_date 
+  FROM user_account_actions 
+  WHERE action_type IN ('Suspension', 'Account Closure'));
