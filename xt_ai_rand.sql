@@ -829,3 +829,22 @@ JOIN content_reports b ON a.content_id = b.content_id
 GROUP BY a.content_type
 ORDER BY num_rep DESC
 LIMIT 3;
+
+
+"""
+Write a SQL query to find the user_id of accounts that were created in the last 6 months and have a current account_status of 'Active', but have no associated content reports (of any type) submitted against them within the last 3 months.
+Show the user_id and their account_creation_date.
+
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
