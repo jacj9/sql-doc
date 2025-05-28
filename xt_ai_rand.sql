@@ -768,9 +768,43 @@ report_date (DATE)
 report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
-SELECT reporting_user_id, b.report_id
-FROM cotent_reports a
+-- First attempt(Incorrect)
+  SELECT a.reporting_user_id, b.report_id
+FROM content_reports a
 JOIN content_reports b ON a.report_id = b.report_id
 WHERE a.report_date < b.report_date
 AND a.status IN ('Pending', 'Reviewed', 'Actioned')
-  AND b.status = 'Dimissed';
+AND b.status = 'Dimissed';
+
+-- Sample solution
+SELECT
+    reporting_user_id,
+    report_id
+FROM
+    content_reports
+WHERE
+    status = 'Dismissed';
+
+-- Another attempt (27-05-2025)
+"""
+Write a SQL query to identify users who reported content that was later determined to be not abusive (i.e., the content_report's status was set to 'Dismissed').
+Show the user_id of the reporting user and the report_id of the dismissed report.
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
+
+  
+
+  
+"""
+Write a SQL query to identify the top 3 content_type that have received the highest number of total reports.
+
+Show the content_type and the total count of reports for each.
+"""
