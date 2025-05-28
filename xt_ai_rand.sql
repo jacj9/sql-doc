@@ -768,3 +768,9 @@ report_date (DATE)
 report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT reporting_user_id, b.report_id
+FROM cotent_reports a
+JOIN content_reports b ON a.report_id = b.report_id
+WHERE a.report_date < b.report_date
+AND a.status IN ('Pending', 'Reviewed', 'Actioned')
+  AND b.status = 'Dimissed';
