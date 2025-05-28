@@ -823,3 +823,9 @@ report_date (DATE)
 report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT a.content_type, COUNT(b.report_id) AS num_rep
+FROM content a
+JOIN content_reports b ON a.content_id = b.content_id
+GROUP BY a.content_type
+ORDER BY num_rep DESC
+LIMIT 3;
