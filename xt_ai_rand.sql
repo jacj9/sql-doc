@@ -852,7 +852,10 @@ SELECT a.user_id, a.account_creation_date
   FROM users a
   JOIN user_account_actions b ON a.user_id = b.user_id
   WHERE a.account_creation_date = NOW() - INTERVAL 6 MONTH
-  AND action_date IS NULL;
+  AND a.account_status = 'Active'
+  AND b.action_id IS NULL
+  AND b.action_date < NOW() - INTERVAL 3 MONTH
+  AND a.action_creation_date < b.action_date;
 
 
 """
