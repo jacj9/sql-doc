@@ -888,7 +888,6 @@ SELECT a.user_id, a.account_creation_date
   LEFT JOIN content b ON a.user_id = b.user_id
   LEFT JOIN content_reports c ON b.content_id = c.content_id
   AND c.report_date >= NOW() - INTERVAL 3 MONTH
- 
   WHERE a.account_creation_date >= NOW() - INTERVAL 6 MONTH
   AND a.account_status = 'Active'
   AND c.report_id IS NULL;
