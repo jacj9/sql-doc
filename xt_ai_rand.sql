@@ -848,7 +848,11 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
-
+SELECT a.user_id, a.account_creation_date
+  FROM users a
+  JOIN user_account_actions b ON a.user_id = b.user_id
+  WHERE a.account_creation_date = NOW() - INTERVAL 6 MONTH
+  AND action_date IS NULL;
 
 
 """
