@@ -841,14 +841,23 @@ account_creation_date (DATE)
 country (VARCHAR)
 account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
 
-TABLE: user_account_actions: Contains records of actions taken against user accounts.
-action_id (INT, Primary Key)
+TABLE: content
+content_id (INT, Primary Key)
 user_id (INT, Foreign Key referencing users.user_id)
-action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
-action_date (DATE)
-reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
-SELECT a.user_id, a.account_creation_date
+-- First attempt(Incorrect)
+  SELECT a.user_id, a.account_creation_date
   FROM users a
   JOIN user_account_actions b ON a.user_id = b.user_id
   WHERE a.account_creation_date = NOW() - INTERVAL 6 MONTH
@@ -857,7 +866,33 @@ SELECT a.user_id, a.account_creation_date
   AND b.action_date < NOW() - INTERVAL 3 MONTH
   AND a.action_creation_date < b.action_date;
 
+-- Sample Solution
+SELECT
+    u.user_id,
+    u.account_creation_date
+FROM
+    users u
+LEFT JOIN
+    content c ON u.user_id = c.user_id -- Link users to their content
+LEFT JOIN
+    content_reports cr ON c.content_id = cr.content_id
+    AND cr.report_date >= NOW() - INTERVAL 3 MONTH -- Only consider reports within the last 3 months for the join
+WHERE
+    u.account_creation_date >= NOW() - INTERVAL 6 MONTH -- Accounts created in the last 6 months
+    AND u.account_status = 'Active' -- Account is currently active
+    AND cr.report_id IS NULL; -- No reports found for this user's content within the last 3 months
 
+-- Another attempt
+SELECT a.user_id, a.account_creation_date
+  FROM users a
+  LEFT JOIN content b ON a.user_id = b.user_id
+  LEFT JOIN content_reports c ON b.content_id = c.content_id
+  AND c.report_date >= NOW() - INTERVAL 3 MONTH
+ 
+  WHERE a.account_creation_date >= NOW() - INTERVAL 6 MONTH
+  AND a.account_status = 'Active'
+  AND c.report_id IS NULL;
+  
 """
 Write a SQL query to identify users who have submitted at least one content report, but have never had any account actions (e.g., 'Suspension', 'Warning', 'Account Closure') taken against their own account.
 Show the user_id and the total number of reports they have made.
