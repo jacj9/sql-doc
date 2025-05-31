@@ -924,3 +924,11 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT a.user_id, COUNT(b.report_id) AS num_report
+FROM users a
+LEFT JOIN content_reports b ON a.user_id = b.reporting_user_id
+LEFT JOIN user_account_actions c ON a.user_id = c.user_id
+WHERE c.action_type IS NULL
+GROUP BY a.user_id
+ORDER BY num_report
+HAVING num_report >= 1;
