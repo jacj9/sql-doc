@@ -970,5 +970,19 @@ reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
 SELECT AVG(COUNT(content_id))
 FROM content_reports
-GROUP BY reporting_user_id
 HAVING COUNT(content_id) >=1;
+
+-- Sample Solution
+SELECT
+    AVG(reports_made) AS average_reports_per_active_reporter
+FROM (
+    SELECT
+        reporting_user_id,
+        COUNT(report_id) AS reports_made
+    FROM
+        content_reports
+    GROUP BY
+        reporting_user_id
+    HAVING
+        COUNT(report_id) >= 1 -- Ensures we only consider users who submitted at least one report
+) AS subquery_user_reports;
