@@ -968,3 +968,7 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT AVG(COUNT(content_id))
+FROM content_reports
+GROUP BY reporting_user_id
+HAVING COUNT(content_id) >=1;
