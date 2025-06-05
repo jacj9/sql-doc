@@ -971,3 +971,9 @@ FROM (
 ) AS subquery_user_reports;
 
 -- Second Attempt
+SELECT AVG(num_report) AS avg_num_rep_users
+FROM (SELECT reporting_user_id, COUNT(report_id) AS num_report
+    FROM content_reports
+  GROUP BY reporting_user_id
+  HAVING num_report >=1
+  ) AS num_user_report;
