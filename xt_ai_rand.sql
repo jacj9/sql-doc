@@ -940,18 +940,6 @@ Exercise:
 Write a SQL query to calculate the average number of content reports submitted by users who have submitted at least one report.
 The result should be a single numerical value (the average).
 
-TABLE: users: Contains user information.
-user_id (INT, Primary Key)
-account_creation_date (DATE)
-country (VARCHAR)
-account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
-
-TABLE: content
-content_id (INT, Primary Key)
-user_id (INT, Foreign Key referencing users.user_id)
-content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
-creation_date (DATE)
-
 TABLE: content_reports: Contains reports of potentially abusive content.
 report_id (INT, Primary Key)
 content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
@@ -961,13 +949,8 @@ report_date (DATE)
 report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 
-TABLE: user_account_actions: Contains records of actions taken against user accounts.
-action_id (INT, Primary Key)
-user_id (INT, Foreign Key referencing users.user_id)
-action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
-action_date (DATE)
-reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+-- First Attempt (INCORRECT)
 SELECT AVG(COUNT(content_id))
 FROM content_reports
 HAVING COUNT(content_id) >=1;
@@ -986,3 +969,5 @@ FROM (
     HAVING
         COUNT(report_id) >= 1 -- Ensures we only consider users who submitted at least one report
 ) AS subquery_user_reports;
+
+-- Second Attempt
