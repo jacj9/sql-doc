@@ -977,3 +977,10 @@ FROM (SELECT reporting_user_id, COUNT(report_id) AS num_report
   GROUP BY reporting_user_id
   HAVING num_report >=1
   ) AS num_user_report;
+
+
+"""
+Write a SQL query to calculate the Monthly Active Users (MAU) who have also submitted at least one content report within that same month.
+
+Show the month (e.g., 'YYYY-MM') and the count of such users for each month in the last year.
+"""
