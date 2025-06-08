@@ -1034,4 +1034,5 @@ report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
 -- 07 June 2025
-SELECT 
+SELECT TO_CHAR(account_creation_date, 'YYYY-MM') AS MAU, COUNT(report_id)
+FROM 
