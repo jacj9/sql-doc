@@ -1034,10 +1034,13 @@ report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
 -- 07 June 2025
-SELECT TO_CHAR(account_creation_date, 'YYYY-MM') AS MAU, COUNT(b.reporting_user_id) AS us_ea_month
+SELECT TO_CHAR(account_creation_date, 'YYYY-MM') AS MAU, 
+        COUNT(b.reporting_user_id) AS us_ea_month
 FROM users a 
 JOIN content_reports b ON a.user_id = b.reporting_user_id
-AND (SELECT TO_CHAR(account_creation_date, 'YYYY-MM') AS month FROM users)
+AND (SELECT TO_CHAR(account_creation_date, 'YYYY-MM') AS month,  
+  FROM content_reports 
+  WHERE report_date = NOW() - INTERVAL - 1 MONTH) monthly
 WHERE a.account_creation_date = NOW() - INTERVAL 1 YEAR
 GROUP BY us_ea_month
 HAVING us_ea_month >= 1;
