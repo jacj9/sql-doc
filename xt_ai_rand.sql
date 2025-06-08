@@ -1038,7 +1038,8 @@ SELECT TO_CHAR(account_creation_date, 'YYYY-MM') AS MAU,
         COUNT(b.reporting_user_id) AS us_ea_month
 FROM users a 
 JOIN content_reports b ON a.user_id = b.reporting_user_id
-AND (SELECT TO_CHAR(account_creation_date, 'YYYY-MM') AS month  
+AND (SELECT TO_CHAR(account_creation_date, 'YYYY-MM') AS month,
+  COUNT(reporting_user_id) AS user
   FROM users, content_reports 
   WHERE report_date = NOW() - INTERVAL - 1 MONTH
   GROUP BY month
