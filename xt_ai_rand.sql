@@ -1072,3 +1072,11 @@ GROUP BY
 report_month
 ORDER BY
 report_month;
+
+
+"""
+Write a SQL query to identify content_type that have a high volume of reports but a low percentage of those reports resulting in an 'Actioned' status. 
+This could indicate content types that are frequently reported but rarely found to be in violation.
+Show the content_type, the total_reports_count for that type, and the percentage_actioned (calculated as (number of 'Actioned' reports / total reports for that content type) * 100). 
+Limit the results to content types with at least 100 total reports.
+"""
