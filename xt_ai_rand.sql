@@ -1061,3 +1061,14 @@ GROUP BY
 ORDER BY
     report_month;
 
+-- On my own
+SELECT 
+  TO_CHAR(report_date, 'YYYY-MM') AS report_month,
+  COUNT(DISTINCT reporting_user_id) AS monthly_active_reporters
+FROM content_reports
+WHERE
+  report_date >= NOW() - INTERVAL 1 YEAR
+GROUP BY
+report_month
+ORDER BY
+report_month;
