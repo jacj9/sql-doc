@@ -1079,4 +1079,32 @@ Write a SQL query to identify content_type that have a high volume of reports bu
 This could indicate content types that are frequently reported but rarely found to be in violation.
 Show the content_type, the total_reports_count for that type, and the percentage_actioned (calculated as (number of 'Actioned' reports / total reports for that content type) * 100). 
 Limit the results to content types with at least 100 total reports.
+
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
