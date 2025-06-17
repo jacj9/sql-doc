@@ -1108,3 +1108,5 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT content_type, total_reports_count, (COUNT(status)/SUM(report_ic) * 100) AS percentage_actions
+FROM content_reports, content
