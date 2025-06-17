@@ -1110,3 +1110,5 @@ reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
 SELECT content_type, total_reports_count, (COUNT(status)/SUM(report_ic) * 100) AS percentage_actions
 FROM content_reports, content
+WHERE status = 'Actioned'
+GROUP BY content_type
