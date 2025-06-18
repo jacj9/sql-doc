@@ -1108,7 +1108,9 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
-SELECT content_type, total_reports_count, (COUNT(status)/SUM(report_ic) * 100) AS percentage_actions
-FROM content_reports, content
-WHERE status = 'Actioned'
-GROUP BY content_type
+SELECT a.content_type, SUM(b.report_id) AS total_reports_count, (COUNT(status)/SUM(b.report_id) * 100) AS percentage_actions
+FROM content_reports a
+JOIN content b ON a.content_id = b.content_id
+WHERE a.status = 'Actioned'
+GROUP BY a.content_type
+HAVING percentage_actions >= 100;
