@@ -1113,4 +1113,5 @@ FROM content_reports a
 JOIN content b ON a.content_id = b.content_id
 WHERE a.status = 'Actioned'
 GROUP BY a.content_type
+ORDER BY a.content_type, total_reports_count
 HAVING percentage_actions >= 100;
