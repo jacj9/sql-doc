@@ -1116,3 +1116,20 @@ GROUP BY a.content_type
 ORDER BY a.content_type, total_reports_count
 HAVING percentage_actions >= 100;
 
+-- Correction Sample Solution
+SELECT
+    c.content_type,
+    COUNT(cr.report_id) AS total_reports_count,
+    CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id) AS percentage_actioned
+FROM
+    content cr
+JOIN
+    content_reports cr_join ON c.content_id = cr_join.content_id -- Joining content to content_reports
+GROUP BY
+    c.content_type
+HAVING
+    COUNT(cr.report_id) >= 100 -- High volume of reports (at least 100)
+    AND (CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id)) < <YOUR_LOW_PERCENTAGE_THRESHOLD>;
+    -- Example: AND (CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id)) < 20 -- for less than 20% actioned
+ORDER BY
+    percentage_actioned ASC; -- Order by lowest percentage to show 'low percentage' types first
