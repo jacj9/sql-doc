@@ -1108,13 +1108,6 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
-SELECT a.content_type, SUM(b.report_id) AS total_reports_count, (COUNT(status)/SUM(b.report_id) * 100) AS percentage_actions
-FROM content_reports a
-JOIN content b ON a.content_id = b.content_id
-WHERE a.status = 'Actioned'
-GROUP BY a.content_type
-ORDER BY a.content_type, total_reports_count
-HAVING percentage_actions >= 100;
 
 -- Correction Sample Solution
 SELECT
@@ -1133,3 +1126,5 @@ HAVING
     -- Example: AND (CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id)) < 20 -- for less than 20% actioned
 ORDER BY
     percentage_actioned ASC; -- Order by lowest percentage to show 'low percentage' types first
+
+-- On my own (Practice)
