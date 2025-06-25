@@ -1140,4 +1140,7 @@ GROUP BY
   c.content_type
 HAVING
   COUNT(cr.report_id) >= 100
+  AND (CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id) < YOUR_LOW_PERCENTAEGE_THRESHOLD
+ORDER BY
+    percentage_actioned ASC;
   
