@@ -1128,3 +1128,16 @@ ORDER BY
     percentage_actioned ASC; -- Order by lowest percentage to show 'low percentage' types first
 
 -- On my own (Practice)
+SELECT 
+  c.content_type,
+  COUNT(cr.report_id) AS total_reports_count,
+  CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0/ COUNT(cr.report_id) AS percentage_actioned
+FROM
+  content cr
+JOIN
+  content_reports cr_join ON c.content_id = cr_join.content_id
+GROUP BY
+  c.content_type
+HAVING
+  COUNT(cr.report_id) >= 100
+  
