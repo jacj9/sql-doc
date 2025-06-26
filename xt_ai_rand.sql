@@ -1112,8 +1112,12 @@ reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 -- Correction Sample Solution
 SELECT
     c.content_type,
-    COUNT(cr.report_id) AS total_reports_count,
-    CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id) AS percentage_actioned
+    COUNT(cr.report_id) AS total_reports_count, -- counts all reports for each content_type after grouping
+    CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id) AS percentage_actioned 
+  -- Counts only reports where the status is 'Actioned'
+  -- For every row where the status is 'Actioned', it counts 1; 
+  -- otherwise, it counts 0. SUM() then totals these 1s for the group, giving you the number of 'Actioned' reports.
+  -- CAST(... AS DECIMAL) * 100.0 / COUNT(cr.report_id): This ensures floating-point division and multiplies by 100 to get the percentage.
 FROM
     content cr
 JOIN
@@ -1121,26 +1125,13 @@ JOIN
 GROUP BY
     c.content_type
 HAVING
-    COUNT(cr.report_id) >= 100 -- High volume of reports (at least 100)
+    COUNT(cr.report_id) >= 100 -- High volume of reports (at least 100) - This correctly filters for content types with at least 100 total reports.
     AND (CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id)) < <YOUR_LOW_PERCENTAGE_THRESHOLD>;
     -- Example: AND (CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id)) < 20 -- for less than 20% actioned
+-- You need to define what "low percentage" means (e.g., less than 20%, less than 10%). I've put a placeholder YOUR_LOW_PERCENTAGE_THRESHOLD
 ORDER BY
     percentage_actioned ASC; -- Order by lowest percentage to show 'low percentage' types first
 
 -- On my own (Practice)
-SELECT 
-  c.content_type,
-  COUNT(cr.report_id) AS total_reports_count,
-  CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0/ COUNT(cr.report_id) AS percentage_actioned
-FROM
-  content cr
-JOIN
-  content_reports cr_join ON c.content_id = cr_join.content_id
-GROUP BY
-  c.content_type
-HAVING
-  COUNT(cr.report_id) >= 100
-  AND (CAST(SUM(CASE WHEN cr.status = 'Actioned' THEN 1 ELSE 0 END) AS DECIMAL) * 100.0 / COUNT(cr.report_id) < YOUR_LOW_PERCENTAEGE_THRESHOLD
-ORDER BY
-    percentage_actioned ASC;
+
   
