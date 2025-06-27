@@ -1133,5 +1133,3 @@ ORDER BY
     percentage_actioned ASC; -- Order by lowest percentage to show 'low percentage' types first
 
 -- On my own (Practice)
-
-  
