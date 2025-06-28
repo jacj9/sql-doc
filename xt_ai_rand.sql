@@ -1134,3 +1134,8 @@ ORDER BY
 
 -- On my own (Practice)
 select c.content_type, count(cr.report_id) as total reports_count, cast(sum(case when cr.status = 'Actioned' then 1 else 0 end) as decimal) * 100.0 / count(cr.report_id) as percentage_actioned
+from content cr join content_report cr_join on cr.content_id = cr_join.content_id
+group by cr.content_type
+having count(cr.report_id) > 100
+AND percentatage_actioned < 0.20
+order by percentage_actioned ASC;
