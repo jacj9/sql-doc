@@ -1174,3 +1174,5 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+SELECT content_type, total_content_items_created_last_6_months, percentage_reported_at_least_once
+FROM content;
