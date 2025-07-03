@@ -1174,5 +1174,14 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
-SELECT content_type, total_content_items_created_last_6_months, percentage_reported_at_least_once
+SELECT content_type, 
+  (SELECT COUNT(content_id) FROM content WHERE creation_date >= NOW() - INTERVAL 6 MONTH) AS total_content_items_created_last_6_months, 
+  ((SELECT COUNT(b.report_id)
+  FROM content a 
+  JOIN content_reports b ON a.content_id = b.content_id 
+  WHERE creation_date >= NOW() - INTERVAL 6 MONTH)/
+  (SELECT COUNT(b.report_id)
+  FROM content a 
+  JOIN content_reports b ON a.content_id = b.content_id 
+  WHERE creation_date >= NOW() - INTERVAL 6 MONTH)) AS percentage_reported_at_least_once
 FROM content;
