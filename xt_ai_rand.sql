@@ -1167,21 +1167,13 @@ report_date (DATE)
 report_status_date (DATE)
 status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 
-TABLE: user_account_actions: Contains records of actions taken against user accounts.
-action_id (INT, Primary Key)
-user_id (INT, Foreign Key referencing users.user_id)
-action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
-action_date (DATE)
-reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
 SELECT content_type, 
   (SELECT COUNT(content_id) FROM content WHERE creation_date >= NOW() - INTERVAL 6 MONTH) AS total_content_items_created_last_6_months, 
-  ((SELECT COUNT(b.report_id)
+  ((SELECT COUNT(a.content_id)
   FROM content a 
   JOIN content_reports b ON a.content_id = b.content_id 
-  WHERE creation_date >= NOW() - INTERVAL 6 MONTH)/
-  (SELECT COUNT(b.report_id)
-  FROM content a 
-  JOIN content_reports b ON a.content_id = b.content_id 
-  WHERE creation_date >= NOW() - INTERVAL 6 MONTH)) AS percentage_reported_at_least_once
+  WHERE creation_date >= NOW() - INTERVAL 6 MONTH
+  HAVING COUNT(b.report_id) >= 1)/
+  (SELECT COUNT(content_id) FROM content WHERE creation_date >= NOW() - INTERVAL 6 MONTH)) AS percentage_reported_at_least_once
 FROM content;
