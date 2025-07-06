@@ -1177,3 +1177,19 @@ SELECT content_type,
   HAVING COUNT(b.report_id) >= 1)/
   (SELECT COUNT(content_id) FROM content WHERE creation_date >= NOW() - INTERVAL 6 MONTH)) AS percentage_reported_at_least_once
 FROM content;
+
+-- SOLUTION
+SELECT
+    c.content_type,
+    COUNT(c.content_id) AS total_content_items_created_last_6_months,
+    CAST(COUNT(DISTINCT CASE WHEN cr.report_id IS NOT NULL THEN c.content_id END) AS DECIMAL) * 100.0 / COUNT(c.content_id) AS percentage_reported_at_least_once
+FROM
+    content c
+LEFT JOIN
+    content_reports cr ON c.content_id = cr.content_id
+WHERE
+    c.creation_date >= NOW() - INTERVAL 6 MONTH -- Filter content created in the last 6 months
+GROUP BY
+    c.content_type
+ORDER BY
+    c.content_type;
