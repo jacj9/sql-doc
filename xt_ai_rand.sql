@@ -1176,10 +1176,12 @@ SELECT
 FROM
     content c
 LEFT JOIN
-    content_reports cr ON c.content_id = cr.content_id
+    content_reports cr ON c.content_id = cr.content_id 
+  -- LEFT JOIN: This is crucial because we want to include all content items created in the last 6 months, even those that have not received any reports.
+  -- If we used an INNER JOIN, content without reports would be excluded.
 WHERE
     c.creation_date >= NOW() - INTERVAL 6 MONTH -- Filter content created in the last 6 months
 GROUP BY
-    c.content_type
+    c.content_type -- This aggregates the results for each unique content_type
 ORDER BY
     c.content_type;
