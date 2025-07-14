@@ -1173,6 +1173,10 @@ SELECT
     c.content_type,
     COUNT(c.content_id) AS total_content_items_created_last_6_months,
     CAST(COUNT(DISTINCT CASE WHEN cr.report_id IS NOT NULL THEN c.content_id END) AS DECIMAL) * 100.0 / COUNT(c.content_id) AS percentage_reported_at_least_once
+  -- CAST(... AS DECIMAL) * 100.0 / COUNT(c.content_id): This performs the division, 
+    -- ensuring floating-point arithmetic by casting the numerator to DECIMAL and multiplying by 100.0 for the percentage. 
+  --CASE WHEN cr.report_id IS NOT NULL THEN c.content_id END: This expression returns the content_id only 
+    -- if there was a matching report in the content_reports table (meaning cr.report_id is not NULL from the LEFT JOIN). If there's no report, it returns NULL.
 FROM
     content c
 LEFT JOIN
