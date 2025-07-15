@@ -1189,3 +1189,10 @@ GROUP BY
     c.content_type -- This aggregates the results for each unique content_type
 ORDER BY
     c.content_type;
+
+"""
+Write a SQL query to identify users who are "heavy reporters" relative to their content creation. 
+Specifically, find users who have submitted at least 5 reports AND whose total number of reports is more than twice their total number of content items created.
+
+Show the user_id, their total_reports_submitted, and their total_content_created.
+"""
