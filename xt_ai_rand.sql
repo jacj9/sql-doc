@@ -1224,6 +1224,7 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
+-- First Try
 SELECT a.user_id, 
   COUNT(b.report_id) AS total_reports_submitted, 
   COUNT(c.content_id) AS total_content_created
@@ -1232,3 +1233,22 @@ RIGHT JOIN content c ON a.user_id = c.user_id
 GROUP BY a.user_id
 ORDER BY total_reports_submitted, total_content_created DESC
 HAVING (total_reports_submitted >= 5) * 2 > total_content_created;
+
+-- Sample SOLUTION
+SELECT
+    u.user_id,
+    COUNT(cr.report_id) AS total_reports_submitted,
+    COUNT(c.content_id) AS total_content_created
+FROM
+    users u
+LEFT JOIN
+    content_reports cr ON u.user_id = cr.reporting_user_id -- Link users to reports they submitted
+LEFT JOIN
+    content c ON u.user_id = c.user_id -- Link users to content they created
+GROUP BY
+    u.user_id
+HAVING
+    COUNT(cr.report_id) >= 5 -- User submitted at least 5 reports
+    AND COUNT(cr.report_id) > (2 * COUNT(c.content_id)) -- Total reports is more than twice total content created
+ORDER BY
+    total_reports_submitted DESC, total_content_created ASC;
