@@ -1224,16 +1224,6 @@ action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
 """
--- First Try
-SELECT a.user_id, 
-  COUNT(b.report_id) AS total_reports_submitted, 
-  COUNT(c.content_id) AS total_content_created
-FROM users a RIGHT JOINS content_reports b ON a.user_id = b.reporting_users_id
-RIGHT JOIN content c ON a.user_id = c.user_id
-GROUP BY a.user_id
-ORDER BY total_reports_submitted, total_content_created DESC
-HAVING (total_reports_submitted >= 5) * 2 > total_content_created;
-
 -- Sample SOLUTION
 SELECT
     u.user_id,
