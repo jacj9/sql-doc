@@ -1283,3 +1283,12 @@ Count Reports by Type: Write a SQL query to count how many reports there are for
 SELECT report_type, SUM(*) AS total_amount
 FROM content_reports
 GROUP BY report_type;
+
+-- Sample Solution
+SELECT
+    report_type,
+    COUNT(report_id) AS total_amount
+FROM
+    content_reports
+GROUP BY
+    report_type;
