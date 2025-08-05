@@ -1280,3 +1280,6 @@ Count Total Reports: Write a SQL query to find the total number of content repor
 
 Count Reports by Type: Write a SQL query to count how many reports there are for each report_type (e.g., 'Spam', 'Harassment', 'Hate Speech'). Show the report_type and its count.
 """
+SELECT report_type, SUM(*) AS total_amount
+FROM content_reports
+GROUP BY report_type;
