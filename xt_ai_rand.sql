@@ -1325,10 +1325,20 @@ Count Total Actions per User: Write a SQL query to count the total number of act
 
 Filter and Count Specific Actions: Write a query to count only the 'Suspension' actions for each user. Show the user_id and the total_suspensions.
 """
-SELECT COUNT(action_id) AS total_num_act, user_id, action_type
-FROM user_account_actions
-GROUP BY action_type;
+SELECT
+    user_id,
+    COUNT(action_id) AS total_actions_count
+FROM
+    user_account_actions
+GROUP BY
+    user_id;
 
-SELECT COUNT(action_id) AS total_num_act, user_id
-FROM user_account_actions
-WHERE action_type = 'Suspension'
+SELECT
+    user_id,
+    COUNT(action_id) AS total_suspensions
+FROM
+    user_account_actions
+WHERE
+    action_type = 'Suspension'
+GROUP BY
+    user_id;
