@@ -1372,4 +1372,16 @@ user_id (INT, Foreign Key referencing users.user_id)
 action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
 action_date (DATE)
 reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+
+Your task is to write a SQL query that shows the total number of content items created by each user who has received at least one account action (like a Warning or Suspension).
+
+Your query should join the users, content, and user_account_actions tables.
+
+Show the user_id and the total_content_created.
 """
+SELECT u.user_id, COUNT(c.content_id) AS total_content_created
+FROM users u
+JOIN content c ON u.user_id = c.user_id
+JOIN user_account_actions ua ON u.user_id = ua.user_id
+GROUP BY u.user_id
+ORDER BY total_content_created;
