@@ -1426,4 +1426,8 @@ Show the user_id and the total_content_items they have created.
 SELECT u.user_id, COUNT(content_id) AS total_content_items
 FROM users u LEFT JOIN content c ON u.user_id = c.user_id
 LEFT JOIN content_reports cr ON c.content_id = cr.content_id
-WHERE cr.report_id IS NULL;
+WHERE cr.report_id IS NULL
+GROUP BY
+    u.user_id
+ORDER BY
+    total_content_items DESC;
