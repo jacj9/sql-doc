@@ -1385,3 +1385,45 @@ JOIN content c ON u.user_id = c.user_id
 JOIN user_account_actions ua ON u.user_id = ua.user_id
 GROUP BY u.user_id
 ORDER BY total_content_created;
+
+"""
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+
+SQL Exercise: Unreported Content Creators
+
+This exercise will give you practice with a LEFT JOIN to find data that doesn't have a matching record in another table.
+
+Your task is to write a SQL query that identifies users who have created content but have never had any of their content items reported.
+
+Show the user_id and the total_content_items they have created.
+"""
+SELECT u.user_id, COUNT(content_id) AS total_content_items
+FROM users u LEFT JOIN content c ON u.user_id = c.user_id
+LEFT JOIN content_reports cr ON c.content_id = cr.content_id
+WHERE cr.report_id IS NULL;
