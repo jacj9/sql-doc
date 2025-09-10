@@ -1475,4 +1475,4 @@ FROM user_account_actions
 WHERE action_type = 'Warning'
 HAVING total_warnings > 3
 GROUP BY user_id;
-ORDER BY total_warnings
+ORDER BY total_warnings;
