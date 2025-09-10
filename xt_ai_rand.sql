@@ -1470,3 +1470,7 @@ Your task is to write a SQL query to identify users who have received more than 
 
 Show the user_id and the total_warnings.
 """
+SELECT user_id, COUNT(report_id) AS total_warnings
+FROM content_reports
+GROUP BY user_id
+ORDER BY total_warnings
