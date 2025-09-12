@@ -1470,9 +1470,18 @@ Your task is to write a SQL query to identify users who have received more than 
 
 Show the user_id and the total_warnings.
 """
-SELECT user_id, COUNT(report_id) AS total_warnings
-FROM user_account_actions
-WHERE action_type = 'Warning'
-HAVING total_warnings > 3
-GROUP BY user_id;
-ORDER BY total_warnings;
+SELECT
+    user_id,
+    COUNT(action_id) AS total_warnings
+FROM
+    user_account_actions
+WHERE
+    action_type = 'Warning'
+GROUP BY
+    user_id
+HAVING
+    COUNT(action_id) > 3
+ORDER BY
+    total_warnings DESC;
+
+
