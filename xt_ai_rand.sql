@@ -1523,3 +1523,10 @@ Your task is to write a SQL query to identify users who have both created at lea
 
 Show the user_id, the total_content_created, and the total_spam_reports_submitted.
 """
+SELECT u.user_id, COUNT(c.content_id) AS total_content_created, COUNT(cr.report_type) AS total_spam_reports_submitted
+FROM users u JOIN content c ON u.user_id = c.user_id
+JOIN content_reports cr ON c.content_id = cr.content_id
+WHERE cr.report_type = 'Spam'
+HAVING cr.report_type > 2 AND c.content_id >= 1
+GROUP BY u.user_id
+ORDER BY total_content_created;
