@@ -1523,20 +1523,32 @@ Your task is to write a SQL query to identify users who have both created at lea
 
 Show the user_id, the total_content_created, and the total_spam_reports_submitted.
 """
+
 SELECT
     u.user_id,
+    -- Count the number of unique content items created by each user.
+    -- We use COUNT(DISTINCT...) to ensure if a user created content, it's counted only once,
+    -- even if that content was joined to multiple reports.
     COUNT(DISTINCT c.content_id) AS total_content_created,
+    -- This is a conditional count. We use a CASE statement inside a COUNT to only
+    -- count the reports where the report_type is 'Spam'.
     COUNT(CASE WHEN cr.report_type = 'Spam' THEN cr.report_id END) AS total_spam_reports_submitted
 FROM
     users u
+-- LEFT JOIN ensures all users are included, even if they haven't created content yet.
 LEFT JOIN
     content c ON u.user_id = c.user_id
+-- LEFT JOIN ensures all users are included, even if they haven't submitted any reports.
 LEFT JOIN
     content_reports cr ON u.user_id = cr.reporting_user_id
+-- GROUP BY is essential to aggregate the counts for each individual user.
 GROUP BY
     u.user_id
+-- HAVING filters the aggregated results based on the conditions from the prompt.
+-- We check for users with at least 1 content item AND more than 2 spam reports.
 HAVING
     COUNT(DISTINCT c.content_id) >= 1
     AND COUNT(CASE WHEN cr.report_type = 'Spam' THEN cr.report_id END) > 2
+-- Order the results to make them easier to read.
 ORDER BY
     total_spam_reports_submitted DESC, total_content_created DESC;
