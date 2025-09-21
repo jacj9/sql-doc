@@ -1552,3 +1552,4 @@ HAVING
 -- Order the results to make them easier to read.
 ORDER BY
     total_spam_reports_submitted DESC, total_content_created DESC;
+
