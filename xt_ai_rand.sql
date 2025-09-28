@@ -1692,3 +1692,11 @@ Your task is to write a SQL query to identify users who have submitted at least 
 
 Show the user_id and the total number of reports they have made.
 """
+SELECT u.user_id, COUNT(cr.report_id) AS total_number_reports
+FROM users u
+LEFT JOIN conten_reports cr ON u.user_id = cr.reporting_user_id
+LEFT JOIN user_account_actions ua ON ua.user_id = u.user_id
+WHERE ua.action_id IS NULL
+GROUP BY u.user_id
+HAVING cr.report_id >= 1
+ORDER BY total_number_reports;
