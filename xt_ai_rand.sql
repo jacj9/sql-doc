@@ -1766,3 +1766,5 @@ GROUP BY u.user_id
 HAVING total_content_created > = 1
   AND total_spam_reports_submitted > 2
 ORDER BY u.user_id, total_content_created, total_spam_reports_submitted
+
+
