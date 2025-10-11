@@ -1765,6 +1765,44 @@ FROM users u
 GROUP BY u.user_id
 HAVING total_content_created > = 1
   AND total_spam_reports_submitted > 2
-ORDER BY u.user_id, total_content_created, total_spam_reports_submitted
+ORDER BY u.user_id, total_content_created, total_spam_reports_submitted;
 
 
+"""
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
+"""
+SQL Exercise: Unreported Content
+
+This exercise will give you practice with a core data analysis pattern: finding records in one table that have no matching records in another.
+
+Your task is to write a SQL query that identifies all content items that have never received a report.
+
+Show the content_id, content_type, and creation_date for each unreported content item.
+"""
