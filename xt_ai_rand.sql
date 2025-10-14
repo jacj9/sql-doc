@@ -1806,3 +1806,7 @@ Your task is to write a SQL query that identifies all content items that have ne
 
 Show the content_id, content_type, and creation_date for each unreported content item.
 """
+SELECT content_id, content_type, creation_date
+FROM content c LEFT JOIN content_reports cr
+ON c.content_id = cr.content_id
+WHERE report_id IS NULL;
