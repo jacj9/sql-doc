@@ -1854,3 +1854,10 @@ GROUP BY a.user_id
 ORDER BY num_report
 HAVING num_report >= 1;
 """
+SELECT u.user_id, COUNT(cr.report_id) AS total_reports_made
+FROM users u 
+LEFT JOIN content_reports cr ON cr.reporting_user_id = u.user_id
+LEFT JOIN user_account_action ua ON ua.user_id = u.user_id
+WHERE ua.action_type IS NULL
+GROUP BY u.user_id
+ORDER BY total_reports_made;
