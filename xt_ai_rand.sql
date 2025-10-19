@@ -1860,4 +1860,5 @@ LEFT JOIN content_reports cr ON cr.reporting_user_id = u.user_id
 LEFT JOIN user_account_action ua ON ua.user_id = u.user_id
 WHERE ua.action_type IS NULL
 GROUP BY u.user_id
-ORDER BY total_reports_made;
+ORDER BY total_reports_made
+HAVING total_reports_made >= 1;
