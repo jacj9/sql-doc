@@ -1865,6 +1865,19 @@ HAVING total_reports_made >= 1;
 
 
 """
+SAMPLE SOLUTION:
+SELECT u.user_id, 
+    COUNT(DISTINCT c.content_id) AS total_content_created,
+    COUNT(CASE WHEN cr.report_type = 'Spam' THEN cr.report_id END) AS  total_spam_reports_submitted
+FROM users u 
+  LEFT JOIN content c ON u.user_id = c.user_id
+  LEFT JOIN conten_reports cr ON cr.reporting_user_id = u.user_id
+GROUP BY u.user_id
+  HAVING total_spam_reports_submitted > 2
+  AND total_content_created >= 1
+ORDER BY total_content_created, total_spam_reports_submitted;
+"""
+"""
 TABLE: users: Contains user information.
 user_id (INT, Primary Key)
 account_creation_date (DATE)
@@ -1899,16 +1912,4 @@ This exercise will give you practice connecting multiple tables to identify user
 Your task is to write a SQL query to identify users who have both created at least one content item and submitted more than two 'Spam' reports.
 Show the user_id, the total_content_created, and the total_spam_reports_submitted.
 """
-"""
-SAMPLE SOLUTION:
-SELECT u.user_id, 
-    COUNT(DISTINCT c.content_id) AS total_content_created,
-    COUNT(CASE WHEN cr.report_type = 'Spam' THEN cr.report_id END) AS  total_spam_reports_submitted
-FROM users u 
-  LEFT JOIN content c ON u.user_id = c.user_id
-  LEFT JOIN conten_reports cr ON cr.reporting_user_id = u.user_id
-GROUP BY u.user_id
-  HAVING total_spam_reports_submitted > 2
-  AND total_content_created >= 1
-ORDER BY total_content_created, total_spam_reports_submitted;
-"""
+
