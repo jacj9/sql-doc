@@ -1914,7 +1914,7 @@ Show the user_id, the total_content_created, and the total_spam_reports_submitte
 """
 SELECT u.user_id, 
   COUNT(DISTINCT c.content_id) AS total_content_created, 
-  COUNT (CASE WHEN cr.report_type = 'Spam') AS total_spam_reports_submitted
+  COUNT (CASE WHEN cr.report_type = 'Spam' THEN cr.report_id END) AS total_spam_reports_submitted
 FROM users u
 LEFT JOIN content c ON u.user_id = c.user_id
 LEFT JOIN content_reports cr ON u.user_id = cr.reporting_user_id
@@ -1922,3 +1922,66 @@ GROUP BY u.user_id
 HAVING total_content_created >= 1
 AND total_spam_reports_submitted >2
 ORDER BY total_content_created, total_spam_reports_submitted;
+
+"""
+SAMPLE SOLUTION:
+SELECT
+    u.user_id,
+    COUNT(cr.report_id) AS total_number_reports
+FROM
+    users u
+-- 1. LEFT JOIN to find reports submitted by the user.
+-- We use LEFT JOIN to include users who may not have submitted any reports yet.
+LEFT JOIN
+    content_reports cr ON u.user_id = cr.reporting_user_id
+-- 2. LEFT JOIN to check for actions taken against the user.
+LEFT JOIN
+    user_account_actions ua ON u.user_id = ua.user_id
+-- 3. The Exclusion Filter: This is the key to the solution. 
+-- It filters out any user who had a successful match in the user_account_actions table (ua).
+WHERE
+    ua.action_id IS NULL
+-- 4. Group results by user.
+GROUP BY
+    u.user_id
+-- 5. The Inclusion Filter: Filter the aggregated count to ensure the user submitted AT LEAST ONE report.
+HAVING
+    COUNT(cr.report_id) >= 1
+ORDER BY
+    total_number_reports DESC;
+"""
+"""
+TABLE: users: Contains user information.
+user_id (INT, Primary Key)
+account_creation_date (DATE)
+country (VARCHAR)
+account_status (VARCHAR, e.g., 'Active', 'Suspended', 'Closed')
+
+TABLE: content
+content_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+content_type (VARCHAR, e.g., 'Video', 'Post', 'Comment')
+creation_date (DATE)
+
+TABLE: content_reports: Contains reports of potentially abusive content.
+report_id (INT, Primary Key)
+content_id (INT, Foreign Key referencing a content table - not included here for simplicity)
+reporting_user_id (INT, Foreign Key referencing users.user_id, users who made the report)
+report_type (VARCHAR, e.g., 'Harassment', 'Hate Speech', 'Spam')
+report_date (DATE)
+report_status_date (DATE)
+status (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+
+TABLE: user_account_actions: Contains records of actions taken against user accounts.
+action_id (INT, Primary Key)
+user_id (INT, Foreign Key referencing users.user_id)
+action_type (VARCHAR, e.g., 'Suspension', 'Warning', 'Account Closure')
+action_date (DATE)
+reason (VARCHAR, e.g., 'Pending', 'Reviewed', 'Actioned', 'Dismissed')
+"""
+"""
+SQL Exercise: Prolific Reporters with Clean Records
+This exercise focuses on identifying users who actively submit reports but have never had any account actions taken against them. This is a pattern often analyzed for potential malicious or retaliatory reporting.
+Your task is to write a SQL query to identify users who have submitted at least one content report, but have never had any account actions (e.g., 'Suspension', 'Warning', 'Account Closure') taken against their own account.
+Show the user_id and the total number of reports they have made.
+"""
