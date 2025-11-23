@@ -1985,3 +1985,11 @@ This exercise focuses on identifying users who actively submit reports but have 
 Your task is to write a SQL query to identify users who have submitted at least one content report, but have never had any account actions (e.g., 'Suspension', 'Warning', 'Account Closure') taken against their own account.
 Show the user_id and the total number of reports they have made.
 """
+SELECT u.user_id, SUM(cr.report_id) AS tot_num_rep
+FROM users u
+LEFT JOIN content_report cr ON u.user_id = cr.reporting_user_id
+LEFT JOIN user_account_actions ua ON u.user_id = ua.user_id
+WHERE ua.action_type IS NULL
+GROUP BY u.user_id
+HAVING tot_num_rep >= 1
+ORDER BY tot_num_rep;
