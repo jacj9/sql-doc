@@ -1993,3 +1993,27 @@ WHERE ua.action_type IS NULL
 GROUP BY u.user_id
 HAVING tot_num_rep >= 1
 ORDER BY tot_num_rep;
+SELECT
+    u.user_id,
+    COUNT(cr.report_id) AS total_number_reports
+FROM
+    users u
+-- 1. LEFT JOIN to find reports submitted by the user.
+-- We use LEFT JOIN to include users who may not have submitted any reports yet.
+LEFT JOIN
+    content_reports cr ON u.user_id = cr.reporting_user_id
+-- 2. LEFT JOIN to check for actions taken against the user.
+LEFT JOIN
+    user_account_actions ua ON u.user_id = ua.user_id
+-- 3. The Exclusion Filter: This is the key to the solution. 
+-- It filters out any user who had a successful match in the user_account_actions table (ua).
+WHERE
+    ua.action_id IS NULL
+-- 4. Group results by user.
+GROUP BY
+    u.user_id
+-- 5. The Inclusion Filter: Filter the aggregated count to ensure the user submitted AT LEAST ONE report.
+HAVING
+    COUNT(cr.report_id) >= 1
+ORDER BY
+    total_number_reports DESC;
