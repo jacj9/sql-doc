@@ -2045,3 +2045,8 @@ Your task is to write a SQL query to identify users who have both created at lea
 
 Show the user_id, the total_content_created, and the total_spam_reports_submitted.
 """
+SELECT u.user_id, 
+  SUM(c.content_id) AS total_content_created, 
+  SUM(cr.reporting_user_id) AS total_spam_reports_submitted
+FROM 
+WHERE
